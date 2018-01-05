@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uranus", "serial\Uranus.csproj", "{64AC5435-5801-4086-975E-6F9A210C639C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdate", "AutoUpdate\AutoUpdate.csproj", "{94193740-9E5B-4EA6-A798-931C966133FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64AC5435-5801-4086-975E-6F9A210C639C}.Debug|x86.ActiveCfg = Debug|x86
+		{64AC5435-5801-4086-975E-6F9A210C639C}.Debug|x86.Build.0 = Debug|x86
+		{64AC5435-5801-4086-975E-6F9A210C639C}.Release|x86.ActiveCfg = Release|x86
+		{64AC5435-5801-4086-975E-6F9A210C639C}.Release|x86.Build.0 = Release|x86
+		{94193740-9E5B-4EA6-A798-931C966133FE}.Debug|x86.ActiveCfg = Debug|x86
+		{94193740-9E5B-4EA6-A798-931C966133FE}.Debug|x86.Build.0 = Debug|x86
+		{94193740-9E5B-4EA6-A798-931C966133FE}.Release|x86.ActiveCfg = Release|x86
+		{94193740-9E5B-4EA6-A798-931C966133FE}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
