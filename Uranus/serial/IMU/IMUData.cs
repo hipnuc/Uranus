@@ -11,6 +11,7 @@ namespace Uranus.Data
         public UInt32 UID;
         public UInt32 Key32;
         public UInt16 Key16;
+        public UInt16 Key8;
         public Int16[] AccRaw;
         public Int16[] AccCalibrated;
         public Int16[] AccFiltered;
@@ -44,6 +45,7 @@ namespace Uranus.Data
         public  enum ItemID
         {
             kItemKey16 = 0x81,
+            kItemKey8 = 0x82,
             kItemTest8F = 0x60,
             kItemIMU = 0x70,   /* 3 x 3 x sizeof(float) */
             kItemKey32 = 0x80,   /* key status 32bit     size: 4 */
@@ -233,7 +235,7 @@ namespace Uranus.Data
                     offset += 7;
                     AvailableItem.Add(cmd);
                     csv_headers.Add("AccGravityX, AccGravityY, AccGravityZ");
-                    csv_data.Add(imuData.AccLinear[0].ToString() + ',' + imuData.AccLinear[1].ToString() + ',' + imuData.AccLinear[2].ToString());
+                    csv_data.Add(imuData.AccGravity[0].ToString() + ',' + imuData.AccGravity[1].ToString() + ',' + imuData.AccGravity[2].ToString());
                     string_data += string.Format("AccGravity:").PadRight(14) + imuData.AccGravity[0].ToString("0").PadLeft(5, ' ') + " " + imuData.AccGravity[1].ToString("0").PadLeft(5, ' ') + " " + imuData.AccGravity[2].ToString("0").PadLeft(5, ' ') + "\r\n";
                     break;
 
@@ -387,6 +389,14 @@ namespace Uranus.Data
                     csv_headers.Add("Key16");
                     csv_data.Add(imuData.Key16.ToString());
                     string_data += string.Format("Key16:").PadRight(14) + "0x" + imuData.Key16.ToString("X").PadLeft(5, ' ') + "\r\n";
+                    break;
+                case (byte)ItemID.kItemKey8:
+                    imuData.Key8 = BitConverter.ToUInt16(buf, offset + 1);
+                    offset += 3;
+                    AvailableItem.Add(cmd);
+                    csv_headers.Add("Key8");
+                    csv_data.Add(imuData.Key8.ToString());
+                    string_data += string.Format("Key8:").PadRight(14) + "0x" + imuData.Key8.ToString("X").PadLeft(5, ' ') + "\r\n";
                     break;
                 default:
                     // error has been occured. may be a unspported Items

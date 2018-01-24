@@ -115,11 +115,12 @@ namespace Uranus.DialogsAndWindows
                 return;
             }
 
+            csvFileWriter.Start();
             hasStarted = true;
             StateChange(hasStarted);
 
             LogStartTime = DateTime.Now;
-            csvFileWriter.Start();
+            
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
