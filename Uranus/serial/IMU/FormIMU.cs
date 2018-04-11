@@ -92,6 +92,9 @@ namespace Uranus.DialogsAndWindows
                     {
                     }
 
+                    // dual to headingIndicatorInstrumentControl1 error, use the negnate number
+                    aircraftHeading = -aircraftHeading;
+
                     if (aircraftHeading < 0)
                     {
                         aircraftHeading += 360;

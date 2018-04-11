@@ -17,6 +17,8 @@ namespace Uranus.Data
         public Int16[] AccFiltered;
         public Int16[] AccLinear;
         public Int16[] AccGravity;
+        public float[,] RFQuat;
+        public float[,] RFEul;
 
         public Int16[] GyoRaw;
         public Int16[] GyoCalibrated;
@@ -48,26 +50,23 @@ namespace Uranus.Data
             kItemKey8 = 0x82,
             kItemTest8F = 0x60,
             kItemIMU = 0x70,   /* 3 x 3 x sizeof(float) */
-            kItemKey32 = 0x80,   /* key status 32bit     size: 4 */
+            kItemRFQuat = 0x71,   /* 4*16 float quat */
+            kItemRFEul = 0x72,
             kItemTimeStampNTP = 0x8A,   /* size:8 , 64 bit timestamp, see: https://en.wikipedia.org/wiki/Network_Time_Protocol#Timestamps */
             kItemID = 0x90,   /* user programed ID    size: 1 */
-            kItemUID = 0x91,   /* Unique ID            size: 4 */
-            kItemIPAdress = 0x92,   /* ip address           size: 4 */
             kItemAccRaw = 0xA0,   /* raw acc              size: 3x2 */
             kItemAccCalibrated = 0xA1,
             kItemAccFiltered = 0xA2,
             kItemAccLinear = 0xA5,
             kItemAccGravity = 0xA6,
             kItemAccNorm = 0xA8,
-            kItemGyoRaw = 0xB0,   /* raw gyro             size: 3x2 */
-            kItemGyoCalibrated = 0xB1,
-            kItemGyoFiltered = 0xB2,
+            kItemGyrRaw = 0xB0,   /* raw gyro             size: 3x2 */
+            kItemGyrCalibrated = 0xB1,
+            kItemGyrFiltered = 0xB2,
             kItemGyoNorm = 0xB8,
             kItemMagRaw = 0xC0,   /* raw mag              size: 3x2 */
             kItemMagCalibrated = 0xC1,
             kItemMagFiltered = 0xC2,
-            kItemMagDistortion = 0xC3,   /* float 0-1000 */
-            kItemMagNorm = 0xC8,
             kItemRotationEular = 0xD0,   /* eular angle          size:3x2 */
             kItemRotationEular2 = 0xD9,   /* new eular angle      size:3x4 */
             kItemRotationQuat = 0xD1,   /* att q,               size:4x4 */
@@ -170,14 +169,14 @@ namespace Uranus.Data
                                               string.Format("Mag:").PadRight(10) + imuData.FloatIMUData[6].ToString("f3").PadLeft(8, ' ') + " " + imuData.FloatIMUData[7].ToString("f3").PadLeft(8, ' ') + " " + imuData.FloatIMUData[8].ToString("f3").PadLeft(8, ' ') + "\r\n";
                     break;
 
-                case (byte)ItemID.kItemUID:
-                    imuData.UID = BitConverter.ToUInt32(buf, offset + 1);
-                    offset += 5;
-                    AvailableItem.Add(cmd);
-                    csv_headers.Add("UID");
-                    csv_data.Add(imuData.UID.ToString());
-                    string_data += "UID:" + "0x" + imuData.UID.ToString("X") + "\r\n";
-                    break;
+                //case (byte)ItemID.kItemUID:
+                //    imuData.UID = BitConverter.ToUInt32(buf, offset + 1);
+                //    offset += 5;
+                //    AvailableItem.Add(cmd);
+                //    csv_headers.Add("UID");
+                //    csv_data.Add(imuData.UID.ToString());
+                //    string_data += "UID:" + "0x" + imuData.UID.ToString("X") + "\r\n";
+                //    break;
 
                 case (byte)ItemID.kItemAccRaw:
                     imuData.AccRaw = new Int16[3];
@@ -239,7 +238,7 @@ namespace Uranus.Data
                     string_data += string.Format("AccGravity:").PadRight(14) + imuData.AccGravity[0].ToString("0").PadLeft(5, ' ') + " " + imuData.AccGravity[1].ToString("0").PadLeft(5, ' ') + " " + imuData.AccGravity[2].ToString("0").PadLeft(5, ' ') + "\r\n";
                     break;
 
-                case (byte)ItemID.kItemGyoRaw:
+                case (byte)ItemID.kItemGyrRaw:
                     imuData.GyoRaw = new Int16[3];
                     imuData.GyoRaw[0] = (Int16)(buf[offset + 1] + (buf[offset + 2] << 8));
                     imuData.GyoRaw[1] = (Int16)(buf[offset + 3] + (buf[offset + 4] << 8));
@@ -251,7 +250,7 @@ namespace Uranus.Data
                     string_data += string.Format("角速度:").PadRight(11) + imuData.GyoRaw[0].ToString("0").PadLeft(5, ' ') + " " + imuData.GyoRaw[1].ToString("0").PadLeft(5, ' ') + " " + imuData.GyoRaw[2].ToString("0").PadLeft(5, ' ') + "\r\n";
                     break;
 
-                case (byte)ItemID.kItemGyoCalibrated:
+                case (byte)ItemID.kItemGyrCalibrated:
                     imuData.GyoCalibrated = new Int16[3];
                     imuData.GyoCalibrated[0] = (Int16)(buf[offset + 1] + (buf[offset + 2] << 8));
                     imuData.GyoCalibrated[1] = (Int16)(buf[offset + 3] + (buf[offset + 4] << 8));
@@ -263,7 +262,7 @@ namespace Uranus.Data
                     string_data += string.Format("GyoCalibrated:").PadRight(14) + imuData.GyoCalibrated[0].ToString("0").PadLeft(5, ' ') + " " + imuData.GyoCalibrated[1].ToString("0").PadLeft(5, ' ') + " " + imuData.GyoCalibrated[2].ToString("0").PadLeft(5, ' ') + "\r\n";
                     break;
 
-                case (byte)ItemID.kItemGyoFiltered:
+                case (byte)ItemID.kItemGyrFiltered:
                     imuData.GyoFiltered = new Int16[3];
                     imuData.GyoFiltered[0] = (Int16)(buf[offset + 1] + (buf[offset + 2] << 8));
                     imuData.GyoFiltered[1] = (Int16)(buf[offset + 3] + (buf[offset + 4] << 8));
@@ -309,15 +308,6 @@ namespace Uranus.Data
                     csv_headers.Add("MagFilteredX, MagFilteredY, MagFilteredZ");
                     csv_data.Add(imuData.MagFiltered[0].ToString() + ',' + imuData.MagFiltered[1].ToString() + ',' + imuData.MagFiltered[2].ToString());
                     string_data += string.Format("MagFiltered:").PadRight(14) + imuData.MagFiltered[0].ToString("0").PadLeft(5, ' ') + " " + imuData.MagFiltered[1].ToString("0").PadLeft(5, ' ') + " " + imuData.MagFiltered[2].ToString("0").PadLeft(5, ' ') + "\r\n";
-                    break;
-
-                case (byte)ItemID.kItemMagNorm:
-                    imuData.MagNorm = BitConverter.ToSingle(buf, offset + 1);
-                    offset += 5;
-                    AvailableItem.Add(cmd);
-                    csv_headers.Add("MagNorm");
-                    csv_data.Add(imuData.MagNorm.ToString());
-                    string_data += string.Format("MagNorm:").PadRight(14) + imuData.MagNorm.ToString("f3").PadLeft(5, ' ') + "\r\n";
                     break;
 
                 case (byte)ItemID.kItemRotationEular:
@@ -374,14 +364,14 @@ namespace Uranus.Data
                     csv_data.Add(imuData.Pressure.ToString());
                     string_data += string.Format("Pressure:").PadRight(14) + imuData.Pressure.ToString("f3").PadLeft(5, ' ') + "\r\n";
                     break;
-                case (byte)ItemID.kItemKey32:
-                    imuData.Key32 = BitConverter.ToUInt32(buf, offset + 1);
-                    offset += 5;
-                    AvailableItem.Add(cmd);
-                    csv_headers.Add("Key32");
-                    csv_data.Add(imuData.Key32.ToString());
-                    string_data += string.Format("Key32:").PadRight(14) + "0x" + imuData.Key32.ToString("X").PadLeft(5, ' ') + "\r\n";
-                    break;
+                //case (byte)ItemID.kItemKey32:
+                //    imuData.Key32 = BitConverter.ToUInt32(buf, offset + 1);
+                //    offset += 5;
+                //    AvailableItem.Add(cmd);
+                //    csv_headers.Add("Key32");
+                //    csv_data.Add(imuData.Key32.ToString());
+                //    string_data += string.Format("Key32:").PadRight(14) + "0x" + imuData.Key32.ToString("X").PadLeft(5, ' ') + "\r\n";
+                //    break;
                 case (byte)ItemID.kItemKey16:
                     imuData.Key16 = BitConverter.ToUInt16(buf, offset + 1);
                     offset += 3;
@@ -397,6 +387,38 @@ namespace Uranus.Data
                     csv_headers.Add("Key8");
                     csv_data.Add(imuData.Key8.ToString());
                     string_data += string.Format("Key8:").PadRight(14) + "0x" + imuData.Key8.ToString("X").PadLeft(5, ' ') + "\r\n";
+                    break;
+                case (byte)ItemID.kItemRFQuat:
+                    imuData.RFQuat = new float[16,4];
+                    string_data = string.Format("RFQuat: W X Y Z\r\n");
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        imuData.RFQuat[i, 0] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 0 * 4);
+                        imuData.RFQuat[i, 1] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 1 * 4);
+                        imuData.RFQuat[i, 2] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 2 * 4);
+                        imuData.RFQuat[i, 3] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 3 * 4);
+                        string_data += "[" + i.ToString("d2") + "]:" + imuData.RFQuat[i, 0].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i,1].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i,2].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i,3].ToString("f3").PadLeft(5, ' ') + "\r\n";
+                    }
+
+                    offset += 257;
+                    AvailableItem.Add(cmd);
+                    break;
+                case (byte)ItemID.kItemRFEul:
+                    imuData.RFEul = new float[16, 3];
+                    string_data = string.Format("RFEul: P R Y\r\n");
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        imuData.RFEul[i, 0] = (float)(Int16)(buf[6 * i + offset + 1] + (buf[6 * i + offset + 2] << 8)) / 100;
+                        imuData.RFEul[i, 1] = (float)(Int16)(buf[6 * i + offset + 3] + (buf[6 * i + offset + 4] << 8)) / 100;
+                        imuData.RFEul[i, 2] = (float)(Int16)(buf[6 * i + offset + 5] + (buf[6 * i + offset + 6] << 8)) / 10;
+
+                        string_data += "[" + i.ToString("d2") + "]:" + imuData.RFEul[i,0].ToString("f2").PadLeft(5, ' ') + " " + imuData.RFEul[i,1].ToString("f2").PadLeft(5, ' ') + " " + imuData.RFEul[i,2].ToString("f2").PadLeft(5, ' ') + "\r\n";
+                    }
+
+                    offset += 16*6+1;
+                    AvailableItem.Add(cmd);
                     break;
                 default:
                     // error has been occured. may be a unspported Items

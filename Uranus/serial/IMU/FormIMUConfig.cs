@@ -168,8 +168,6 @@ namespace Uranus.DialogsAndWindows
             {
                 buttonMCal.Text = "停止校准";
                 list.Clear();
-                SendATCmd("AT+MODE=1");
-                Thread.Sleep(20);
                 SendATCmd("AT+MCAL=1");
                 Thread.Sleep(20);
                 SendATCmd("AT+EOUT=1");
