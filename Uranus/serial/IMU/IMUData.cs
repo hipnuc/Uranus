@@ -38,7 +38,7 @@ namespace Uranus.Data
         public byte[] AvailableItem;
         public string[] CsvHeader;
         public string[] CsvData;
-        private string StringData;
+        public string StringData;
 
         public IMUData()
         {
@@ -102,10 +102,10 @@ namespace Uranus.Data
         List<byte> AvailableItem = new List<byte>();
         List<string> csv_headers = new List<string>();
         List<string> csv_data = new List<string>();
-        string string_data = "";
+        string string_data = string.Empty;
 
         csv_headers.Add("Time");
-        csv_data.Add(System.DateTime.Now.ToString() + " " + System.DateTime.Now.Millisecond.ToString());
+        csv_data.Add(DateTime.Now.ToString("HH-mm-ss.fff"));
 
         int offset = 0;
         while (offset < len)
@@ -119,7 +119,7 @@ namespace Uranus.Data
                     AvailableItem.Add( cmd);
                     csv_headers.Add("ID");
                     csv_data.Add(imuData.ID.ToString());
-                    string_data += "ID[" + ((byte)ItemID.kItemID).ToString("X")+ "]:" + imuData.ID.ToString() + "\r\n";
+                    string_data += string.Format("ID:{0}\r\n", imuData.ID.ToString());
                     break;
 
                 case (byte)ItemID.kItemTimeStampNTP:
@@ -144,8 +144,9 @@ namespace Uranus.Data
 
                     offset += 8*4 + 1;
                     AvailableItem.Add(cmd);
-                    csv_headers.Add("Test8F0, Test8F1, Test8F2, Test8F3, Test8F4, Test8F5, Test8F6, Test8F7");
+                    csv_headers.Add("Test8F[0], Test8F[1], Test8F[2], Test8F[3], Test8F[4], Test8F[5], Test8F[6], Test8F[7]");
                     csv_data.Add(imuData.Test8F[0].ToString() + ',' + imuData.Test8F[1].ToString() + ',' + imuData.Test8F[2].ToString() + ',' + imuData.Test8F[3].ToString() +  ',' + imuData.Test8F[4].ToString() +  ',' + imuData.Test8F[5].ToString() + ',' +  imuData.Test8F[6].ToString() +  ',' + imuData.Test8F[7].ToString());
+
                     string_data += string.Format("Test8F").PadRight(10) + imuData.Test8F[0].ToString("f3").PadLeft(5, ' ') + " " + imuData.Test8F[1].ToString("f3").PadLeft(5, ' ') + " " + imuData.Test8F[2].ToString("f3").PadLeft(5, ' ') + " " + imuData.Test8F[3].ToString("f3").PadLeft(5, ' ') + "\r\n" + imuData.Test8F[4].ToString("f3").PadLeft(15, ' ') + " " + imuData.Test8F[5].ToString("f3").PadLeft(5, ' ') + " " + imuData.Test8F[6].ToString("f3").PadLeft(5, ' ') +" " +  imuData.Test8F[7].ToString("f3").PadLeft(5, ' ') + "\r\n";
                     break;
 
@@ -169,14 +170,6 @@ namespace Uranus.Data
                                               string.Format("Mag:").PadRight(10) + imuData.FloatIMUData[6].ToString("f3").PadLeft(8, ' ') + " " + imuData.FloatIMUData[7].ToString("f3").PadLeft(8, ' ') + " " + imuData.FloatIMUData[8].ToString("f3").PadLeft(8, ' ') + "\r\n";
                     break;
 
-                //case (byte)ItemID.kItemUID:
-                //    imuData.UID = BitConverter.ToUInt32(buf, offset + 1);
-                //    offset += 5;
-                //    AvailableItem.Add(cmd);
-                //    csv_headers.Add("UID");
-                //    csv_data.Add(imuData.UID.ToString());
-                //    string_data += "UID:" + "0x" + imuData.UID.ToString("X") + "\r\n";
-                //    break;
 
                 case (byte)ItemID.kItemAccRaw:
                     imuData.AccRaw = new Int16[3];

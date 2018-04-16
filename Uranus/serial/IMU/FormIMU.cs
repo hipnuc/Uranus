@@ -51,10 +51,28 @@ namespace Uranus.DialogsAndWindows
             }
         }
 
+
+
         private void ConnectionDataReceived(byte[] buffer, int index, int count)
         {
             fmConfig.PutRawData(buffer);
             KbootDecoder.Input(buffer);
+            IMUData data;
+            data =  SxDecode.Decode(buffer);
+            if (data != null)
+            {
+                imuData = data;
+                DoOnDataReceived(imuData);
+            }
+
+            data = JGDecoder.Decode(buffer);
+            if (data != null)
+            {
+                imuData = data;
+                DoOnDataReceived(imuData);
+            }
+
+
         }
 
         private void FormIMU_Load(object sender, EventArgs e)
@@ -63,7 +81,6 @@ namespace Uranus.DialogsAndWindows
             formUpdateTimer.Tick += new EventHandler(formUpdateTimer_Tick);
             formUpdateTimer.Start();
         }
-
 
         private void ReflashData(IMUData data)
         {
