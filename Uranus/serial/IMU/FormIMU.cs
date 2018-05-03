@@ -57,10 +57,12 @@ namespace Uranus.DialogsAndWindows
         {
             fmConfig.PutRawData(buffer);
             KbootDecoder.Input(buffer);
+            
             IMUData data;
             data =  SxDecode.Decode(buffer);
             if (data != null)
             {
+                SampleCounter.Increment(1);
                 imuData = data;
                 DoOnDataReceived(imuData);
             }
@@ -69,6 +71,7 @@ namespace Uranus.DialogsAndWindows
             if (data != null)
             {
                 imuData = data;
+                SampleCounter.Increment(1);
                 DoOnDataReceived(imuData);
             }
 

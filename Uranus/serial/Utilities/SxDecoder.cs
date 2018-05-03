@@ -17,15 +17,13 @@ namespace Uranus.Utilities
             kStatus_Chksum
         };
 
-        private const int DataLen = 17;
+        private const int DATA_LEN = 17;
         static private status state = status.kStatus_Idle;
         static List<byte> list = new List<byte>();
 
-        static int count = 0;
-
         public static IMUData Decode(byte[] buf)
         {
-            IMUData imu = new IMUData();
+            IMUData imu = null;
             foreach (byte data in buf)
             {
                 switch (state)
@@ -40,12 +38,13 @@ namespace Uranus.Utilities
                         if (data == 0xAA)
                         {
                             state = status.kStatus_Data;
-                            count = 0;
                             list.Clear();
                         }
                         break;
                     case status.kStatus_Data:
-                        if (count == DataLen)
+                        list.Add(data);
+
+                        if (list.Count == DATA_LEN)
                         {
                             state = status.kStatus_Idle;
 
@@ -60,6 +59,8 @@ namespace Uranus.Utilities
 
                             if (checkSumCal == checkSumRecv)
                             {
+                                imu = new IMUData();
+
                                 imu.EulerAngles = new float[3];
                                 imu.EulerAngles[0] = (float)(Int16)(ctx[3] + (ctx[4] << 8)) / 100;
                                 imu.EulerAngles[1] = (float)(Int16)(ctx[5] + (ctx[6] << 8)) / 100;
@@ -76,20 +77,18 @@ namespace Uranus.Utilities
                                 imu.StringData = string.Format("Angles(PRY):").PadRight(14) + imu.EulerAngles[0].ToString("f2").PadLeft(5, ' ') + " " + imu.EulerAngles[1].ToString("f2").PadLeft(5, ' ') + " " + imu.EulerAngles[2].ToString("f2").PadLeft(5, ' ') + "\r\n";
 
                                 imu.StringData += string.Format("加速度:").PadRight(11) + imu.AccRaw[0].ToString("0").PadLeft(5, ' ') + " " + imu.AccRaw[1].ToString("0").PadLeft(5, ' ') + " " + imu.AccRaw[2].ToString("0").PadLeft(5, ' ') + "\r\n";
-                                return imu;
                             }
-                            
                         }
-                        list.Add(data);
-                        count++;
+
+                        
+                        break;
+                    default:
                         break;
                     
                 }
             }
-            return null;
+            return imu;
         }
-
-        
 
     }
 }

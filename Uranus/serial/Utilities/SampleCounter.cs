@@ -9,9 +9,6 @@ namespace Uranus.Utilities
 {
     class SampleCounter
     {
-        // using Accurate Timer
-
-      //  private System.Windows.Forms.Timer timer;
         AccurateTimer aTimer;
 
         public int SamplesReceived { get; private set; }
@@ -25,13 +22,6 @@ namespace Uranus.Utilities
             // Initialise variables
             prevSamplesReceived = 0;
             SamplesReceived = 0;
-
-            //// Setup timer
-            //timer = new System.Windows.Forms.Timer();
-            //timer.Interval = 1000;
-            //timer.Tick += new EventHandler(timer_Tick);
-            //timer.Start();
-
             aTimer = new AccurateTimer(new Action(aTimerTick1), 1000); // In milliseconds. 10 = 1/100th second.
         }
 
@@ -54,11 +44,6 @@ namespace Uranus.Utilities
             prevSamplesReceived = SamplesReceived;
         }
 
-        //void timer_Tick(object sender, EventArgs e)
-        //{
-        //    SampleRate = SamplesReceived - prevSamplesReceived;
-        //    prevSamplesReceived = SamplesReceived;
-        //}
     }
 }
 
