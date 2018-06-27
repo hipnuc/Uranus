@@ -71,12 +71,16 @@ namespace Uranus.Utilities
                                 imu.AccRaw[1] = (Int16)(ctx[9]  + (ctx[10] << 8));
                                 imu.AccRaw[2] = (Int16)(ctx[11] + (ctx[12] << 8));
 
-                                imu.AvailableItem = new byte[2];
-                                imu.AvailableItem[0] = 0xD0;
-                                imu.AvailableItem[1] = 0xA0;
-                                imu.StringData = string.Format("Angles(PRY):").PadRight(14) + imu.EulerAngles[0].ToString("f2").PadLeft(5, ' ') + " " + imu.EulerAngles[1].ToString("f2").PadLeft(5, ' ') + " " + imu.EulerAngles[2].ToString("f2").PadLeft(5, ' ') + "\r\n";
+                                if (imu.AccRaw[0] < 2000 && imu.AccRaw[0] > -2000 && imu.AccRaw[1] < 2000 && imu.AccRaw[1] > -2000 && imu.AccRaw[2] < 2000 && imu.AccRaw[2] > -2000)
+                                {
+                                    imu.AvailableItem = new byte[2];
+                                    imu.AvailableItem[0] = 0xD0;
+                                    imu.AvailableItem[1] = 0xA0;
+                                    imu.StringData = string.Format("Angles(PRY):").PadRight(14) + imu.EulerAngles[0].ToString("f2").PadLeft(5, ' ') + " " + imu.EulerAngles[1].ToString("f2").PadLeft(5, ' ') + " " + imu.EulerAngles[2].ToString("f2").PadLeft(5, ' ') + "\r\n";
 
-                                imu.StringData += string.Format("加速度:").PadRight(11) + imu.AccRaw[0].ToString("0").PadLeft(5, ' ') + " " + imu.AccRaw[1].ToString("0").PadLeft(5, ' ') + " " + imu.AccRaw[2].ToString("0").PadLeft(5, ' ') + "\r\n";
+                                    imu.StringData += string.Format("加速度:").PadRight(11) + imu.AccRaw[0].ToString("0").PadLeft(5, ' ') + " " + imu.AccRaw[1].ToString("0").PadLeft(5, ' ') + " " + imu.AccRaw[2].ToString("0").PadLeft(5, ' ') + "\r\n";
+                                }
+
                             }
                         }
 

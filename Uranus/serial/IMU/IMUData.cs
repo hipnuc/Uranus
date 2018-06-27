@@ -18,6 +18,7 @@ namespace Uranus.Data
         public Int16[] AccLinear;
         public Int16[] AccGravity;
         public float[,] RFQuat;
+        public Int16[,] RFAccCalibrated;
         public float[,] RFEul;
 
         public Int16[] GyoRaw;
@@ -52,6 +53,7 @@ namespace Uranus.Data
             kItemIMU = 0x70,   /* 3 x 3 x sizeof(float) */
             kItemRFQuat = 0x71,   /* 4*16 float quat */
             kItemRFEul = 0x72,
+            kItemRFAccCalibrated = 0x75,
             kItemTimeStampNTP = 0x8A,   /* size:8 , 64 bit timestamp, see: https://en.wikipedia.org/wiki/Network_Time_Protocol#Timestamps */
             kItemID = 0x90,   /* user programed ID    size: 1 */
             kItemAccRaw = 0xA0,   /* raw acc              size: 3x2 */
@@ -80,19 +82,6 @@ namespace Uranus.Data
             return StringData;
         }
 
-        private static ulong GetMilliSeconds(byte[] ntpTime, int  startIndex)
-        {
-            ulong intpart = 0, fractpart = 0;
-            byte[] data = new byte[8];
-            Array.Copy(ntpTime, startIndex, data, 0, 8);
-
-            intpart = BitConverter.ToUInt32(data, 0);
-            fractpart = BitConverter.ToUInt32(data, 4);
-
-            var milliseconds = intpart * 1000 + ((fractpart * 1000) / 0x100000000L);
-
-            return milliseconds;
-        }
 
 #region Decode 
 
@@ -103,6 +92,9 @@ namespace Uranus.Data
         List<string> csv_headers = new List<string>();
         List<string> csv_data = new List<string>();
         string string_data = string.Empty;
+
+        string _csv_header = "";
+        string _csv_data = "";
 
         csv_headers.Add("Time");
         csv_data.Add(DateTime.Now.ToString("HH-mm-ss.fff"));
@@ -123,7 +115,7 @@ namespace Uranus.Data
                     break;
 
                 case (byte)ItemID.kItemTimeStampNTP:
-                    imuData.TimeStampNTP = GetMilliSeconds(buf, offset + 1);
+                    imuData.TimeStampNTP = 0;
                     offset += 9;
                     AvailableItem.Add(cmd);
                     csv_headers.Add("TimeStampNTP");
@@ -139,7 +131,7 @@ namespace Uranus.Data
                     imuData.Test8F[3] = BitConverter.ToSingle(buf, offset + 1 + 3 * 4);
                     imuData.Test8F[4] = BitConverter.ToSingle(buf, offset + 1 + 4 * 4);
                     imuData.Test8F[5] = BitConverter.ToSingle(buf, offset + 1 + 5 * 4);
-                    imuData.Test8F[6] = BitConverter.ToSingle(buf, offset + 1 + 6* 4);
+                    imuData.Test8F[6] = BitConverter.ToSingle(buf, offset + 1 + 6 * 4);
                     imuData.Test8F[7] = BitConverter.ToSingle(buf, offset + 1 + 7 * 4);
 
                     offset += 8*4 + 1;
@@ -383,8 +375,9 @@ namespace Uranus.Data
                     break;
                 case (byte)ItemID.kItemRFQuat:
                     imuData.RFQuat = new float[16,4];
-                    string_data = string.Format("RFQuat: W X Y Z\r\n");
-
+                    string_data += string.Format("RFQuat: W X Y Z\r\n");
+                    _csv_header = "";
+                    _csv_data = "";
                     for (int i = 0; i < 16; i++)
                     {
                         imuData.RFQuat[i, 0] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 0 * 4);
@@ -392,26 +385,61 @@ namespace Uranus.Data
                         imuData.RFQuat[i, 2] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 2 * 4);
                         imuData.RFQuat[i, 3] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 3 * 4);
                         string_data += "[" + i.ToString("d2") + "]:" + imuData.RFQuat[i, 0].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i,1].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i,2].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i,3].ToString("f3").PadLeft(5, ' ') + "\r\n";
+
+                        _csv_header += string.Format("W{0}, X{0}, Y{0}, Z{0},", i);
+                        _csv_data += imuData.RFQuat[i, 0].ToString("f2") + "," + imuData.RFQuat[i, 1].ToString("f2") + "," + imuData.RFQuat[i, 2].ToString("f2") + "," + imuData.RFQuat[i, 3].ToString("f2") + ",";
                     }
 
                     offset += 257;
                     AvailableItem.Add(cmd);
+                    csv_headers.Add(_csv_header);
+                    csv_data.Add(_csv_data);
                     break;
-                case (byte)ItemID.kItemRFEul:
-                    imuData.RFEul = new float[16, 3];
-                    string_data = string.Format("RFEul: P R Y\r\n");
+                case (byte)ItemID.kItemRFAccCalibrated:
+                    imuData.RFAccCalibrated = new Int16[16, 3];
+                    string_data += string.Format("RFAccCalibrated: X Y Z\r\n");
+                    _csv_header = "";
+                    _csv_data = "";
 
                     for (int i = 0; i < 16; i++)
                     {
+                        imuData.RFAccCalibrated[i, 0] = (Int16)(buf[offset + 1 + 6 * i] + (buf[offset + 2 + 6 * i] << 8));
+                        imuData.RFAccCalibrated[i, 1] = (Int16)(buf[offset + 3 + 6 * i] + (buf[offset + 4 + 6 * i] << 8));
+                        imuData.RFAccCalibrated[i, 2] = (Int16)(buf[offset + 5 + 6 * i] + (buf[offset + 6 + 6 * i] << 8));
+
+                        _csv_header += string.Format("X{0}, Y{0}, Z{0},", i);
+                        _csv_data += imuData.RFAccCalibrated[i, 0].ToString("0") + "," + imuData.RFAccCalibrated[i, 1].ToString("0") + "," + imuData.RFAccCalibrated[i, 2].ToString("0") + ",";
+
+                        string_data += "[" + i.ToString("d2") + "]:" + imuData.RFAccCalibrated[i, 0].ToString("0").PadLeft(5, ' ') + " " + imuData.RFAccCalibrated[i, 1].ToString("0").PadLeft(5, ' ') + " " + imuData.RFAccCalibrated[i, 2].ToString("0").PadLeft(5, ' ') + " " + "\r\n";
+                    }
+                    csv_headers.Add(_csv_header);
+                    csv_data.Add(_csv_data);
+                    offset += 1 + 6*16;
+                    AvailableItem.Add(cmd);
+                    break;
+                case (byte)ItemID.kItemRFEul:
+                    imuData.RFEul = new float[16, 3];
+                    string_data += string.Format("RFEul: P R Y\r\n");
+                    _csv_header = "";
+                    _csv_data = "";
+
+                    for (int i = 0; i < 16; i++)
+                    {
+                        
                         imuData.RFEul[i, 0] = (float)(Int16)(buf[6 * i + offset + 1] + (buf[6 * i + offset + 2] << 8)) / 100;
                         imuData.RFEul[i, 1] = (float)(Int16)(buf[6 * i + offset + 3] + (buf[6 * i + offset + 4] << 8)) / 100;
                         imuData.RFEul[i, 2] = (float)(Int16)(buf[6 * i + offset + 5] + (buf[6 * i + offset + 6] << 8)) / 10;
 
                         string_data += "[" + i.ToString("d2") + "]:" + imuData.RFEul[i,0].ToString("f2").PadLeft(5, ' ') + " " + imuData.RFEul[i,1].ToString("f2").PadLeft(5, ' ') + " " + imuData.RFEul[i,2].ToString("f2").PadLeft(5, ' ') + "\r\n";
+
+                        _csv_header += string.Format("P{0}, R{0}, Y{0},", i);
+                        _csv_data += imuData.RFEul[i, 0].ToString("f2") + "," + imuData.RFEul[i, 1].ToString("f2") + "," + imuData.RFEul[i, 2].ToString("f2") + ",";
                     }
 
                     offset += 16*6+1;
                     AvailableItem.Add(cmd);
+                    csv_headers.Add(_csv_header);
+                    csv_data.Add(_csv_data);
                     break;
                 default:
                     // error has been occured. may be a unspported Items
