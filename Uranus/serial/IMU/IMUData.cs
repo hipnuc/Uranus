@@ -170,7 +170,7 @@ namespace Uranus.Data
                     imuData.AccRaw[2] = (Int16)(buf[offset + 5] + (buf[offset + 6] << 8));
                     offset += 7;
                     AvailableItem.Add(cmd);
-                    csv_headers.Add("AccRaw, AccRawY, AccRawZ");
+                    csv_headers.Add("AccRawX, AccRawY, AccRawZ");
                     csv_data.Add(imuData.AccRaw[0].ToString() + ',' + imuData.AccRaw[1].ToString() + ',' + imuData.AccRaw[2].ToString());
                     string_data += string.Format("加速度:").PadRight(11) + imuData.AccRaw[0].ToString("0").PadLeft(5, ' ') + " " + imuData.AccRaw[1].ToString("0").PadLeft(5, ' ') + " " + imuData.AccRaw[2].ToString("0").PadLeft(5, ' ') + "\r\n";
                     break;
@@ -378,7 +378,7 @@ namespace Uranus.Data
                     string_data += string.Format("RFQuat: W X Y Z\r\n");
                     _csv_header = "";
                     _csv_data = "";
-                    for (int i = 0; i < 16; i++)
+                    for (int i = 0; i < 8; i++)
                     {
                         imuData.RFQuat[i, 0] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 0 * 4);
                         imuData.RFQuat[i, 1] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 1 * 4);
@@ -390,7 +390,7 @@ namespace Uranus.Data
                         _csv_data += imuData.RFQuat[i, 0].ToString("f2") + "," + imuData.RFQuat[i, 1].ToString("f2") + "," + imuData.RFQuat[i, 2].ToString("f2") + "," + imuData.RFQuat[i, 3].ToString("f2") + ",";
                     }
 
-                    offset += 257;
+                    offset += 1 + 16*8;
                     AvailableItem.Add(cmd);
                     csv_headers.Add(_csv_header);
                     csv_data.Add(_csv_data);
@@ -401,7 +401,7 @@ namespace Uranus.Data
                     _csv_header = "";
                     _csv_data = "";
 
-                    for (int i = 0; i < 16; i++)
+                    for (int i = 0; i < 8; i++)
                     {
                         imuData.RFAccCalibrated[i, 0] = (Int16)(buf[offset + 1 + 6 * i] + (buf[offset + 2 + 6 * i] << 8));
                         imuData.RFAccCalibrated[i, 1] = (Int16)(buf[offset + 3 + 6 * i] + (buf[offset + 4 + 6 * i] << 8));
@@ -414,7 +414,7 @@ namespace Uranus.Data
                     }
                     csv_headers.Add(_csv_header);
                     csv_data.Add(_csv_data);
-                    offset += 1 + 6*16;
+                    offset += 1 + 6*8;
                     AvailableItem.Add(cmd);
                     break;
                 case (byte)ItemID.kItemRFEul:
@@ -423,7 +423,7 @@ namespace Uranus.Data
                     _csv_header = "";
                     _csv_data = "";
 
-                    for (int i = 0; i < 16; i++)
+                    for (int i = 0; i < 8; i++)
                     {
                         
                         imuData.RFEul[i, 0] = (float)(Int16)(buf[6 * i + offset + 1] + (buf[6 * i + offset + 2] << 8)) / 100;
@@ -436,7 +436,7 @@ namespace Uranus.Data
                         _csv_data += imuData.RFEul[i, 0].ToString("f2") + "," + imuData.RFEul[i, 1].ToString("f2") + "," + imuData.RFEul[i, 2].ToString("f2") + ",";
                     }
 
-                    offset += 16*6+1;
+                    offset += 1 + 6*8;
                     AvailableItem.Add(cmd);
                     csv_headers.Add(_csv_header);
                     csv_data.Add(_csv_data);
