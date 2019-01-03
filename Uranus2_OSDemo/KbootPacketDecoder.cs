@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace Uranus
+namespace Uranus.Utilities
 {
     class KbootPacketDecoder
     {
         public delegate void KBootDecoderDataReceivedEventHandler(object sender, byte[] data, int len);
         public event KBootDecoderDataReceivedEventHandler OnPacketRecieved;
 
-        private UInt16 MAX_PACKET_LEN = 128;
-        private UInt16 DataPacketLen;
+        private UInt16 MAX_PACKET_LEN = 512;
+        private UInt16 DataLen;
         private status state = status.kStatus_Idle;
         private byte cmd;
         private int DataCounter = 0;
-        private byte[] DataPacketBuffer = new byte[256];
+        private byte[] DataBuf = new byte[512];
         private Queue<byte> RxQueue = new Queue<byte>();
         private UInt16 CRCReceived;
         private UInt16 CRCCalculated;
@@ -34,7 +34,7 @@ namespace Uranus
 
         private void KbootDecodeThread()
         {
-            while (true )
+            while (true)
             {
                     lock (RxQueue)
                     {
@@ -91,7 +91,6 @@ namespace Uranus
 
         private void PacketDecode(byte c)
         {
-            //Console.WriteLine(c.ToString("X"));
             switch (state)
             {
                 case status.kStatus_Idle:
@@ -102,7 +101,7 @@ namespace Uranus
                     break;
                 case status.kStatus_Cmd:
                     cmd = c;
-                    if(cmd == 0xA5)
+                    if (cmd == 0xA5)
                     {
                         state = status.kStatus_LenLow;
                     }
@@ -112,13 +111,13 @@ namespace Uranus
                     }
                     break;
                 case status.kStatus_LenLow:
-                    DataPacketLen = c;
+                    DataLen = c;
                     state = status.kStatus_LenHigh;
                     break;
                 case status.kStatus_LenHigh:
-                    DataPacketLen += (UInt16)(c << 8);
+                    DataLen += (UInt16)(c << 8);
 
-                    if (DataPacketLen > MAX_PACKET_LEN)
+                    if (DataLen > MAX_PACKET_LEN)
                     {
                         state = status.kStatus_Idle;
                     }
@@ -137,24 +136,28 @@ namespace Uranus
                     state = status.kStatus_Data;
                     break;
                 case status.kStatus_Data:
-                    DataPacketBuffer[DataCounter++] = c;
+                    DataBuf[DataCounter++] = c;
 
-                    if (DataCounter >= DataPacketLen)
+                    if (DataCounter >= DataLen)
                     {
                         List<byte> header = new List<byte>();
                         header.Add(0x5A);
                         header.Add(0xA5);
-                        header.AddRange(BitConverter.GetBytes(DataPacketLen));
+                        header.AddRange(BitConverter.GetBytes(DataLen));
                         CRCCalculated = crc16(0, header.ToArray(), 0, header.Count, 0x1021);
-                        CRCCalculated = crc16(CRCCalculated, DataPacketBuffer, 0, DataPacketLen, 0x1021);
+                        CRCCalculated = crc16(CRCCalculated, DataBuf, 0, DataLen, 0x1021);
 
-                        // CRC match, Kboot suffucally received a packet
+                        // CRC match, Kboot successfully received a packet
                         if (CRCCalculated == CRCReceived)
                         {
                             if (OnPacketRecieved != null)
                             {
-                                OnPacketRecieved(this, DataPacketBuffer, DataPacketLen);
+                                OnPacketRecieved(this, DataBuf, DataLen);
                             }
+                        }
+                        else
+                        {
+                            //Console.WriteLine("Kboot PacketDecoder CRC check failed\r\n");
                         }
                         state = status.kStatus_Idle;
                     }
