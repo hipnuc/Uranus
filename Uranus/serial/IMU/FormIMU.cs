@@ -67,14 +67,6 @@ namespace Uranus.DialogsAndWindows
                 DoOnDataReceived(imuData);
             }
 
-            data = JGDecoder.Decode(buffer);
-            if (data != null)
-            {
-                imuData = data;
-                SampleCounter.Increment(1);
-                DoOnDataReceived(imuData);
-            }
-
 
         }
 

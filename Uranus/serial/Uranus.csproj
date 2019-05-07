@@ -128,7 +128,6 @@
     <Compile Include="IMU\FormIMUConfig.Designer.cs">
       <DependentUpon>FormIMUConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\JGDecoder.cs" />
     <Compile Include="Utilities\SxDecoder.cs" />
     <Compile Include="Utilities\KbootPacketDecoder.cs" />
     <Compile Include="DialogsAndWindows\FormAbout.cs">

@@ -19,6 +19,7 @@ namespace Uranus.Data
         public Int16[] AccGravity;
         public float[,] RFQuat;
         public Int16[,] RFAccCalibrated;
+        public float[] RFTemperature;
         public float[,] RFEul;
 
         public Int16[] GyoRaw;
@@ -54,6 +55,7 @@ namespace Uranus.Data
             kItemRFQuat = 0x71,   /* 4*16 float quat */
             kItemRFEul = 0x72,
             kItemRFAccCalibrated = 0x75,
+            kItemRFTemperature = 0x7C,
             kItemTimeStampNTP = 0x8A,   /* size:8 , 64 bit timestamp, see: https://en.wikipedia.org/wiki/Network_Time_Protocol#Timestamps */
             kItemID = 0x90,   /* user programed ID    size: 1 */
             kItemAccRaw = 0xA0,   /* raw acc              size: 3x2 */
@@ -80,7 +82,7 @@ namespace Uranus.Data
         public override string ToString()
         {
             return StringData;
-        }
+        } 
 
 
 #region Decode 
@@ -417,7 +419,27 @@ namespace Uranus.Data
                     offset += 1 + 6*8;
                     AvailableItem.Add(cmd);
                     break;
-                case (byte)ItemID.kItemRFEul:
+                    case (byte)ItemID.kItemRFTemperature:
+                        imuData.RFTemperature = new float[len];
+                        string_data += string.Format("RFTemperature\r\n");
+                        _csv_header = "";
+                        _csv_data = "";
+
+                        for (int i = 0; i < (len / 4); i++)
+                        {
+                            imuData.RFTemperature[i] = BitConverter.ToSingle(buf, offset + 1 + 4 * i);
+
+                                _csv_header += string.Format("T{0},", i); 
+                                _csv_data += imuData.RFTemperature[i].ToString("f3") + ",";
+
+                                string_data += "[" + i.ToString("d2") + "]:" + imuData.RFTemperature[i].ToString("f3").PadLeft(5, ' ')  + "\r\n";
+                            }
+                            csv_headers.Add(_csv_header);
+                            csv_data.Add(_csv_data);
+                            offset += 1 + len;
+                        AvailableItem.Add(cmd);
+                        break;
+                    case (byte)ItemID.kItemRFEul:
                     imuData.RFEul = new float[16, 3];
                     string_data += string.Format("RFEul: P R Y\r\n");
                     _csv_header = "";
