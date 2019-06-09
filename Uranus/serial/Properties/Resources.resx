@@ -121,9 +121,6 @@
   <data name="AvionicsInstrumentControlDemo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\AvionicsInstrumentControlDemo.dll;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="updatelog" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\updatelog.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
-  </data>
   <data name="ZedGraph" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ZedGraph.dll;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -144,5 +141,8 @@
   </data>
   <data name="QuaternionView" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\3d\QuaternionView.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="updatelog" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\updatelog.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
 </root>

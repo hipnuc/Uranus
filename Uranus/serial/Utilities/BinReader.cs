@@ -48,7 +48,7 @@ namespace Uranus.Utilities
             StreamReader sr = new StreamReader(fileName);
             int offset = 0;
             int lineAddr = 0;
-            int baseAddr = 0;
+            int base_offset = 0;
             string hexLine;
             int LineCount = 0;
 
@@ -75,7 +75,7 @@ namespace Uranus.Utilities
                     int lineType = int.Parse(hexLine.Substring(7, 2), System.Globalization.NumberStyles.HexNumber);
                     if (lineType == 0)
                     {
-                        lineAddr = int.Parse(hexLine.Substring(3, 4), System.Globalization.NumberStyles.HexNumber);
+                        lineAddr = int.Parse(hexLine.Substring(3, 4), System.Globalization.NumberStyles.HexNumber) + base_offset;
                     }
 
                     if (_IsStartAddrGet == false && lineType == 0)
@@ -95,8 +95,8 @@ namespace Uranus.Utilities
                         case 3:
                             break;
                         case 4:
-                            baseAddr = int.Parse(hexLine.Substring(9, 4), System.Globalization.NumberStyles.HexNumber);
-                            baseAddr <<= 16;
+                            base_offset = int.Parse(hexLine.Substring(9, 4), System.Globalization.NumberStyles.HexNumber);
+                            base_offset <<= 16;
                             break;
                         case 5:
                             break;
@@ -105,7 +105,6 @@ namespace Uranus.Utilities
 
                     if (lineType == 0)
                     {
-                        lineAddr += baseAddr;
                         lineAddr -= _StartAddr;
                         offset = 0;
                         //Console.WriteLine(lineAddr.ToString());

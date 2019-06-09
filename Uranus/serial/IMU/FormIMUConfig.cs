@@ -51,15 +51,6 @@ namespace Uranus.DialogsAndWindows
 
         private void IMUConfig_Load(object sender, EventArgs e)
         {
-
-            UpdateTimer.Interval = 20;
-            UpdateTimer.Tick += new EventHandler(formUpdateTimer_Tick);
-            UpdateTimer.Start();
-
-            TextUpdateTimer.Interval = 20;
-            TextUpdateTimer.Tick += new EventHandler(TextUpdateTimer_Tick);
-            TextUpdateTimer.Start();
-
             bool ret;
             ret = SendATCmd("AT+EOUT=0");
             Thread.Sleep(10);
@@ -81,6 +72,14 @@ namespace Uranus.DialogsAndWindows
 
             textBoxTerminal.Clear();
             TextQueue.Clear();
+
+            UpdateTimer.Interval = 20;
+            UpdateTimer.Tick += new EventHandler(formUpdateTimer_Tick);
+            UpdateTimer.Start();
+
+            TextUpdateTimer.Interval = 20;
+            TextUpdateTimer.Tick += new EventHandler(TextUpdateTimer_Tick);
+            TextUpdateTimer.Start();
         }
 
         private bool SendATCmd(string cmd)
@@ -128,7 +127,6 @@ namespace Uranus.DialogsAndWindows
             }
             TextQueue.Clear();
             textBoxTerminal.AppendText(Text);
-            
         }
 
 
@@ -214,6 +212,9 @@ namespace Uranus.DialogsAndWindows
         private void FormIMUConfig_FormClosing(object sender, FormClosingEventArgs e)
         {
             SendATCmd("AT+EOUT=1");
+
+            /* fix the bug that when entering this windows, sometime, will cause hardfault */
+            TextUpdateTimer.Dispose();
         }
 
         private void buttonProtocol_Click(object sender, EventArgs e)
