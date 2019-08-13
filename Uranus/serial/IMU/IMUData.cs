@@ -7,11 +7,7 @@ namespace Uranus.Data
     public class IMUData
     {
         public byte ID;
-        public ulong TimeStampNTP;
         public UInt32 UID;
-        public UInt32 Key32;
-        public UInt16 Key16;
-        public UInt16 Key8;
         public Int16[] AccRaw;
         public Int16[] AccCalibrated;
         public Int16[] AccFiltered;
@@ -19,6 +15,7 @@ namespace Uranus.Data
         public Int16[] AccGravity;
         public float[,] RFQuat;
         public Int16[,] RFAccCalibrated;
+        public Int16[,] RFGyrGCalibrated;
         public float[] RFTemperature;
         public float[,] RFEul;
 
@@ -42,21 +39,24 @@ namespace Uranus.Data
         public string[] CsvData;
         public string StringData;
 
+        
+
         public IMUData()
         {
         }
 
         public  enum ItemID
         {
-            kItemKey16 = 0x81,
-            kItemKey8 = 0x82,
             kItemTest8F = 0x60,
             kItemIMU = 0x70,   /* 3 x 3 x sizeof(float) */
             kItemRFQuat = 0x71,   /* 4*16 float quat */
             kItemRFEul = 0x72,
             kItemRFAccCalibrated = 0x75,
+            kItemRFGyrCalibrated = 0x78,
+            kItemRFMagCalibrated = 0x7A,
             kItemRFTemperature = 0x7C,
-            kItemTimeStampNTP = 0x8A,   /* size:8 , 64 bit timestamp, see: https://en.wikipedia.org/wiki/Network_Time_Protocol#Timestamps */
+            kItemExtend = 0x61,   /* extend data */
+            kItemCPUTimeStamp = 0x8A,   /* uint32_t x 1  time stamp CPU tick time in ms */
             kItemID = 0x90,   /* user programed ID    size: 1 */
             kItemAccRaw = 0xA0,   /* raw acc              size: 3x2 */
             kItemAccCalibrated = 0xA1,
@@ -67,7 +67,7 @@ namespace Uranus.Data
             kItemGyrRaw = 0xB0,   /* raw gyro             size: 3x2 */
             kItemGyrCalibrated = 0xB1,
             kItemGyrFiltered = 0xB2,
-            kItemGyoNorm = 0xB8,
+            kItemGyrNorm = 0xB8,
             kItemMagRaw = 0xC0,   /* raw mag              size: 3x2 */
             kItemMagCalibrated = 0xC1,
             kItemMagFiltered = 0xC2,
@@ -76,7 +76,7 @@ namespace Uranus.Data
             kItemRotationQuat = 0xD1,   /* att q,               size:4x4 */
             kItemTemperature = 0xE0,
             kItemPressure = 0xF0,   /* pressure             size:1x4 */
-            kItemEnd = 0x00,   
+            kItemEnd = 0x00,
         };
 
         public override string ToString()
@@ -89,6 +89,7 @@ namespace Uranus.Data
 
     static public IMUData Decode(byte[] buf, int len)
     {
+        int rf_cnt = 8; /* default RF device cnt */
         IMUData imuData = new IMUData();
         List<byte> AvailableItem = new List<byte>();
         List<string> csv_headers = new List<string>();
@@ -116,15 +117,10 @@ namespace Uranus.Data
                     string_data += string.Format("ID:{0}\r\n", imuData.ID.ToString());
                     break;
 
-                case (byte)ItemID.kItemTimeStampNTP:
-                    imuData.TimeStampNTP = 0;
-                    offset += 9;
-                    AvailableItem.Add(cmd);
-                    csv_headers.Add("TimeStampNTP");
-                    csv_data.Add(imuData.TimeStampNTP.ToString());
-                    string_data += "TimeStampNTP["  + ((byte)ItemID.kItemTimeStampNTP).ToString("X")+ "]:" +  imuData.TimeStampNTP.ToString() + " ms\r\n";
+                case (byte)ItemID.kItemExtend:
+                    rf_cnt = buf[2 + 1];
+                    offset += 3 + 1;
                     break;
-
                 case (byte)ItemID.kItemTest8F:
                     imuData.Test8F = new float[8];
                     imuData.Test8F[0] = BitConverter.ToSingle(buf, offset + 1 + 0 * 4);
@@ -359,28 +355,12 @@ namespace Uranus.Data
                 //    csv_data.Add(imuData.Key32.ToString());
                 //    string_data += string.Format("Key32:").PadRight(14) + "0x" + imuData.Key32.ToString("X").PadLeft(5, ' ') + "\r\n";
                 //    break;
-                case (byte)ItemID.kItemKey16:
-                    imuData.Key16 = BitConverter.ToUInt16(buf, offset + 1);
-                    offset += 3;
-                    AvailableItem.Add(cmd);
-                    csv_headers.Add("Key16");
-                    csv_data.Add(imuData.Key16.ToString());
-                    string_data += string.Format("Key16:").PadRight(14) + "0x" + imuData.Key16.ToString("X").PadLeft(5, ' ') + "\r\n";
-                    break;
-                case (byte)ItemID.kItemKey8:
-                    imuData.Key8 = BitConverter.ToUInt16(buf, offset + 1);
-                    offset += 3;
-                    AvailableItem.Add(cmd);
-                    csv_headers.Add("Key8");
-                    csv_data.Add(imuData.Key8.ToString());
-                    string_data += string.Format("Key8:").PadRight(14) + "0x" + imuData.Key8.ToString("X").PadLeft(5, ' ') + "\r\n";
-                    break;
                 case (byte)ItemID.kItemRFQuat:
-                    imuData.RFQuat = new float[16,4];
+                    imuData.RFQuat = new float[rf_cnt, 4];
                     string_data += string.Format("RFQuat: W X Y Z\r\n");
                     _csv_header = "";
                     _csv_data = "";
-                    for (int i = 0; i < 8; i++)
+                    for (int i = 0; i < rf_cnt; i++)
                     {
                         imuData.RFQuat[i, 0] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 0 * 4);
                         imuData.RFQuat[i, 1] = BitConverter.ToSingle(buf, offset + 1 + 16 * i + 1 * 4);
@@ -392,18 +372,18 @@ namespace Uranus.Data
                         _csv_data += imuData.RFQuat[i, 0].ToString("f2") + "," + imuData.RFQuat[i, 1].ToString("f2") + "," + imuData.RFQuat[i, 2].ToString("f2") + "," + imuData.RFQuat[i, 3].ToString("f2") + ",";
                     }
 
-                    offset += 1 + 16*8;
+                    offset += 1 + 16* rf_cnt;
                     AvailableItem.Add(cmd);
                     csv_headers.Add(_csv_header);
                     csv_data.Add(_csv_data);
                     break;
                 case (byte)ItemID.kItemRFAccCalibrated:
-                    imuData.RFAccCalibrated = new Int16[16, 3];
+                    imuData.RFAccCalibrated = new Int16[rf_cnt, 3];
                     string_data += string.Format("RFAccCalibrated: X Y Z\r\n");
                     _csv_header = "";
                     _csv_data = "";
 
-                    for (int i = 0; i < 8; i++)
+                    for (int i = 0; i < rf_cnt; i++)
                     {
                         imuData.RFAccCalibrated[i, 0] = (Int16)(buf[offset + 1 + 6 * i] + (buf[offset + 2 + 6 * i] << 8));
                         imuData.RFAccCalibrated[i, 1] = (Int16)(buf[offset + 3 + 6 * i] + (buf[offset + 4 + 6 * i] << 8));
@@ -416,9 +396,31 @@ namespace Uranus.Data
                     }
                     csv_headers.Add(_csv_header);
                     csv_data.Add(_csv_data);
-                    offset += 1 + 6*8;
+                    offset += 1 + 6* rf_cnt;
                     AvailableItem.Add(cmd);
                     break;
+                    case (byte)ItemID.kItemRFGyrCalibrated:
+                        imuData.RFGyrGCalibrated = new Int16[rf_cnt, 3];
+                        string_data += string.Format("RFGyrCalibrated: X Y Z\r\n");
+                        _csv_header = "";
+                        _csv_data = "";
+
+                        for (int i = 0; i < rf_cnt; i++)
+                        {
+                            imuData.RFGyrGCalibrated[i, 0] = (Int16)(buf[offset + 1 + 6 * i] + (buf[offset + 2 + 6 * i] << 8));
+                            imuData.RFGyrGCalibrated[i, 1] = (Int16)(buf[offset + 3 + 6 * i] + (buf[offset + 4 + 6 * i] << 8));
+                            imuData.RFGyrGCalibrated[i, 2] = (Int16)(buf[offset + 5 + 6 * i] + (buf[offset + 6 + 6 * i] << 8));
+
+                            _csv_header += string.Format("X{0}, Y{0}, Z{0},", i);
+                            _csv_data += imuData.RFGyrGCalibrated[i, 0].ToString("0") + "," + imuData.RFGyrGCalibrated[i, 1].ToString("0") + "," + imuData.RFGyrGCalibrated[i, 2].ToString("0") + ",";
+
+                            string_data += "[" + i.ToString("d2") + "]:" + imuData.RFGyrGCalibrated[i, 0].ToString("0").PadLeft(5, ' ') + " " + imuData.RFGyrGCalibrated[i, 1].ToString("0").PadLeft(5, ' ') + " " + imuData.RFGyrGCalibrated[i, 2].ToString("0").PadLeft(5, ' ') + " " + "\r\n";
+                        }
+                        csv_headers.Add(_csv_header);
+                        csv_data.Add(_csv_data);
+                        offset += 1 + 6 * rf_cnt;
+                        AvailableItem.Add(cmd);
+                        break;
                     case (byte)ItemID.kItemRFTemperature:
                         imuData.RFTemperature = new float[len];
                         string_data += string.Format("RFTemperature\r\n");
@@ -440,12 +442,12 @@ namespace Uranus.Data
                         AvailableItem.Add(cmd);
                         break;
                     case (byte)ItemID.kItemRFEul:
-                    imuData.RFEul = new float[16, 3];
+                    imuData.RFEul = new float[rf_cnt, 3];
                     string_data += string.Format("RFEul: P R Y\r\n");
                     _csv_header = "";
                     _csv_data = "";
 
-                    for (int i = 0; i < 8; i++)
+                    for (int i = 0; i < rf_cnt; i++)
                     {
                         
                         imuData.RFEul[i, 0] = (float)(Int16)(buf[6 * i + offset + 1] + (buf[6 * i + offset + 2] << 8)) / 100;
@@ -458,7 +460,7 @@ namespace Uranus.Data
                         _csv_data += imuData.RFEul[i, 0].ToString("f2") + "," + imuData.RFEul[i, 1].ToString("f2") + "," + imuData.RFEul[i, 2].ToString("f2") + ",";
                     }
 
-                    offset += 1 + 6*8;
+                    offset += 1 + 6* rf_cnt;
                     AvailableItem.Add(cmd);
                     csv_headers.Add(_csv_header);
                     csv_data.Add(_csv_data);

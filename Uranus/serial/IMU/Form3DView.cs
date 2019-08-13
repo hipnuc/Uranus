@@ -76,22 +76,26 @@ namespace Uranus.DialogsAndWindows
 
         public void SetIMUData(IMUData data)
         {
-            if (data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationQuat))
+            if (data != null && data.AvailableItem != null)
             {
-                this.SetQuaternion(data.Quaternion[1], data.Quaternion[2], data.Quaternion[3], data.Quaternion[0]);
+                if (data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationQuat))
+                {
+                    this.SetQuaternion(data.Quaternion[0], data.Quaternion[1], data.Quaternion[2], data.Quaternion[3]);
+                }
+                else if (data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationEular) || data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationEular2))
+                {
+                    this.SetPitchRollYaw(data.EulerAngles[0], data.EulerAngles[1], data.EulerAngles[2]);
+                }
             }
-            else if (data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationEular) || data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationEular2))
-            {
-                this.SetPitchRollYaw(data.EulerAngles[0], data.EulerAngles[1], data.EulerAngles[2]);
-            }
+
         }
 
-        private void SetQuaternion(float x, float y, float z, float w)
+        private void SetQuaternion(float w, float x, float y, float z)
         {
+            qRotation.W = w;
             qRotation.X = x;
             qRotation.Y= y;
             qRotation.Z = z;
-            qRotation.W = w;
         }
 
         void time1_Tick(object sender, EventArgs e)

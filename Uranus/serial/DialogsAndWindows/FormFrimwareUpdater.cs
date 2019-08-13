@@ -88,6 +88,12 @@ namespace Uranus.DialogsAndWindows
             List<byte> Data = new List<byte>();
             Data.Add(0x5A);
             Data.Add((byte)type);
+
+            if (type == FramePacketType.kFramingPacketType_Ping)
+            {
+                return Data.ToArray();
+            }
+
             if (type == FramePacketType.kFramingPacketType_Ack)
             {
                 return Data.ToArray();
@@ -115,7 +121,7 @@ namespace Uranus.DialogsAndWindows
             {
                 a += "0x" + Convert.ToString(cmd[i], 16) + " ";
             }
-       //     Console.Write(a);
+            //Console.Write(a);
            
             return ret;
         }
@@ -144,7 +150,7 @@ namespace Uranus.DialogsAndWindows
             {
                 a += "0x" + Convert.ToString(RxFIFO.ToArray()[i], 16) + " ";
             }
-      //      Console.Write(a);
+            //Console.Write(a);
             return RxFIFO.ToArray();
         }
 
