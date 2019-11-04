@@ -128,7 +128,7 @@ namespace Uranus.DialogsAndWindows
             hasStarted = false;
             StateChange(hasStarted);
 
-            string text = "共保存:" + csvFileWriter.roll.ToString() + "条记录\r\n" + "保存路径: " + csvFileWriter.FilePath.ToString();
+            string text = "共保存:" + csvFileWriter.Row.ToString() + "条记录\r\n" + "保存路径: " + csvFileWriter.FilePath.ToString();
             MessageBox.Show(text, "保存完成");
 
             csvFileWriter.Stop();

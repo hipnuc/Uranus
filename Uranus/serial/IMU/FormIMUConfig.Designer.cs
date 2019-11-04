@@ -69,9 +69,10 @@
             // 
             // buttonExit
             // 
-            this.buttonExit.Location = new System.Drawing.Point(548, 464);
+            this.buttonExit.Location = new System.Drawing.Point(731, 535);
+            this.buttonExit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonExit.Name = "buttonExit";
-            this.buttonExit.Size = new System.Drawing.Size(109, 26);
+            this.buttonExit.Size = new System.Drawing.Size(145, 30);
             this.buttonExit.TabIndex = 0;
             this.buttonExit.Text = "退出配置模式";
             this.buttonExit.UseVisualStyleBackColor = true;
@@ -81,9 +82,11 @@
             // 
             this.groupBox1.Controls.Add(this.radioButtonMode9A);
             this.groupBox1.Controls.Add(this.radioButtonMode6A);
-            this.groupBox1.Location = new System.Drawing.Point(12, 13);
+            this.groupBox1.Location = new System.Drawing.Point(16, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(129, 69);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox1.Size = new System.Drawing.Size(172, 80);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "模式";
@@ -91,9 +94,10 @@
             // radioButtonMode9A
             // 
             this.radioButtonMode9A.AutoSize = true;
-            this.radioButtonMode9A.Location = new System.Drawing.Point(6, 46);
+            this.radioButtonMode9A.Location = new System.Drawing.Point(8, 53);
+            this.radioButtonMode9A.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.radioButtonMode9A.Name = "radioButtonMode9A";
-            this.radioButtonMode9A.Size = new System.Drawing.Size(67, 17);
+            this.radioButtonMode9A.Size = new System.Drawing.Size(81, 19);
             this.radioButtonMode9A.TabIndex = 2;
             this.radioButtonMode9A.Text = "9轴模式";
             this.radioButtonMode9A.UseVisualStyleBackColor = true;
@@ -103,9 +107,10 @@
             // 
             this.radioButtonMode6A.AutoSize = true;
             this.radioButtonMode6A.Checked = true;
-            this.radioButtonMode6A.Location = new System.Drawing.Point(6, 22);
+            this.radioButtonMode6A.Location = new System.Drawing.Point(8, 25);
+            this.radioButtonMode6A.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.radioButtonMode6A.Name = "radioButtonMode6A";
-            this.radioButtonMode6A.Size = new System.Drawing.Size(67, 17);
+            this.radioButtonMode6A.Size = new System.Drawing.Size(81, 19);
             this.radioButtonMode6A.TabIndex = 2;
             this.radioButtonMode6A.TabStop = true;
             this.radioButtonMode6A.Text = "6轴模式";
@@ -114,9 +119,10 @@
             // 
             // buttonRST
             // 
-            this.buttonRST.Location = new System.Drawing.Point(6, 49);
+            this.buttonRST.Location = new System.Drawing.Point(8, 57);
+            this.buttonRST.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonRST.Name = "buttonRST";
-            this.buttonRST.Size = new System.Drawing.Size(100, 25);
+            this.buttonRST.Size = new System.Drawing.Size(133, 29);
             this.buttonRST.TabIndex = 2;
             this.buttonRST.Text = "复位";
             this.buttonRST.UseVisualStyleBackColor = true;
@@ -126,20 +132,22 @@
             // 
             this.textBoxTerminal.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.textBoxTerminal.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxTerminal.Location = new System.Drawing.Point(6, 22);
+            this.textBoxTerminal.Location = new System.Drawing.Point(8, 25);
+            this.textBoxTerminal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.textBoxTerminal.Multiline = true;
             this.textBoxTerminal.Name = "textBoxTerminal";
             this.textBoxTerminal.ReadOnly = true;
             this.textBoxTerminal.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxTerminal.Size = new System.Drawing.Size(242, 247);
+            this.textBoxTerminal.Size = new System.Drawing.Size(321, 284);
             this.textBoxTerminal.TabIndex = 3;
             this.textBoxTerminal.Text = "欢迎来到IMU配置界面";
             // 
             // textBoxCmd
             // 
-            this.textBoxCmd.Location = new System.Drawing.Point(11, 22);
+            this.textBoxCmd.Location = new System.Drawing.Point(15, 25);
+            this.textBoxCmd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.textBoxCmd.Name = "textBoxCmd";
-            this.textBoxCmd.Size = new System.Drawing.Size(231, 20);
+            this.textBoxCmd.Size = new System.Drawing.Size(307, 25);
             this.textBoxCmd.TabIndex = 4;
             this.textBoxCmd.Text = "AT+?";
             // 
@@ -147,18 +155,21 @@
             // 
             this.groupBox2.Controls.Add(this.buttonClear);
             this.groupBox2.Controls.Add(this.textBoxTerminal);
-            this.groupBox2.Location = new System.Drawing.Point(403, 13);
+            this.groupBox2.Location = new System.Drawing.Point(537, 15);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(254, 307);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox2.Size = new System.Drawing.Size(339, 354);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "接收区";
             // 
             // buttonClear
             // 
-            this.buttonClear.Location = new System.Drawing.Point(192, 275);
+            this.buttonClear.Location = new System.Drawing.Point(256, 317);
+            this.buttonClear.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(50, 22);
+            this.buttonClear.Size = new System.Drawing.Size(67, 25);
             this.buttonClear.TabIndex = 9;
             this.buttonClear.Text = "清除";
             this.buttonClear.UseVisualStyleBackColor = true;
@@ -166,9 +177,10 @@
             // 
             // buttonSend
             // 
-            this.buttonSend.Location = new System.Drawing.Point(200, 50);
+            this.buttonSend.Location = new System.Drawing.Point(267, 58);
+            this.buttonSend.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonSend.Name = "buttonSend";
-            this.buttonSend.Size = new System.Drawing.Size(42, 22);
+            this.buttonSend.Size = new System.Drawing.Size(56, 25);
             this.buttonSend.TabIndex = 5;
             this.buttonSend.Text = "写入";
             this.buttonSend.UseVisualStyleBackColor = true;
@@ -179,16 +191,19 @@
             this.groupBox3.Controls.Add(this.zedGraphControl1);
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.buttonMCal);
-            this.groupBox3.Location = new System.Drawing.Point(147, 13);
+            this.groupBox3.Location = new System.Drawing.Point(196, 15);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(250, 387);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox3.Size = new System.Drawing.Size(333, 447);
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "地磁场校准";
             // 
             // zedGraphControl1
             // 
-            this.zedGraphControl1.Location = new System.Drawing.Point(10, 147);
+            this.zedGraphControl1.Location = new System.Drawing.Point(13, 170);
+            this.zedGraphControl1.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.zedGraphControl1.Name = "zedGraphControl1";
             this.zedGraphControl1.ScrollGrace = 0D;
             this.zedGraphControl1.ScrollMaxX = 0D;
@@ -197,24 +212,26 @@
             this.zedGraphControl1.ScrollMinX = 0D;
             this.zedGraphControl1.ScrollMinY = 0D;
             this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(234, 206);
+            this.zedGraphControl1.Size = new System.Drawing.Size(312, 238);
             this.zedGraphControl1.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 42);
+            this.label1.Location = new System.Drawing.Point(9, 48);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(223, 91);
+            this.label1.Size = new System.Drawing.Size(277, 105);
             this.label1.TabIndex = 8;
             this.label1.Text = "关于地磁场校准：\r\n1. 确保保周围 没有任何电磁设备\r\n2. 点击 开始校准\r\n3 绕任意轴旋转或8字校准，\r\n直到图显示为一个饱满的圆表示校准完成\r\n4. 点" +
     "击 结束校准\r\n5. 断电，重启软件，测试，确保无误\r\n";
             // 
             // buttonMCal
             // 
-            this.buttonMCal.Location = new System.Drawing.Point(158, 14);
+            this.buttonMCal.Location = new System.Drawing.Point(211, 16);
+            this.buttonMCal.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonMCal.Name = "buttonMCal";
-            this.buttonMCal.Size = new System.Drawing.Size(72, 25);
+            this.buttonMCal.Size = new System.Drawing.Size(96, 29);
             this.buttonMCal.TabIndex = 7;
             this.buttonMCal.Text = "开始校准";
             this.buttonMCal.UseVisualStyleBackColor = true;
@@ -227,18 +244,21 @@
             this.groupBox4.Controls.Add(this.button2);
             this.groupBox4.Controls.Add(this.buttonINFO);
             this.groupBox4.Controls.Add(this.buttonRST);
-            this.groupBox4.Location = new System.Drawing.Point(12, 89);
+            this.groupBox4.Location = new System.Drawing.Point(16, 103);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(129, 174);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox4.Size = new System.Drawing.Size(172, 201);
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "快捷按钮";
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(6, 142);
+            this.button3.Location = new System.Drawing.Point(8, 164);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(100, 25);
+            this.button3.Size = new System.Drawing.Size(133, 29);
             this.button3.TabIndex = 8;
             this.button3.Text = "关闭数据输出";
             this.button3.UseVisualStyleBackColor = true;
@@ -246,9 +266,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(6, 111);
+            this.button1.Location = new System.Drawing.Point(8, 128);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 25);
+            this.button1.Size = new System.Drawing.Size(133, 29);
             this.button1.TabIndex = 7;
             this.button1.Text = "开启数据输出";
             this.button1.UseVisualStyleBackColor = true;
@@ -256,19 +277,21 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 80);
+            this.button2.Location = new System.Drawing.Point(8, 92);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 25);
+            this.button2.Size = new System.Drawing.Size(133, 29);
             this.button2.TabIndex = 6;
-            this.button2.Text = "输出速率为60Hz";
+            this.button2.Text = "输出速率为50Hz";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // buttonINFO
             // 
-            this.buttonINFO.Location = new System.Drawing.Point(6, 22);
+            this.buttonINFO.Location = new System.Drawing.Point(8, 25);
+            this.buttonINFO.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonINFO.Name = "buttonINFO";
-            this.buttonINFO.Size = new System.Drawing.Size(100, 25);
+            this.buttonINFO.Size = new System.Drawing.Size(133, 29);
             this.buttonINFO.TabIndex = 3;
             this.buttonINFO.Text = "模块信息";
             this.buttonINFO.UseVisualStyleBackColor = true;
@@ -278,9 +301,11 @@
             // 
             this.groupBox5.Controls.Add(this.textBoxCmd);
             this.groupBox5.Controls.Add(this.buttonSend);
-            this.groupBox5.Location = new System.Drawing.Point(403, 322);
+            this.groupBox5.Location = new System.Drawing.Point(537, 372);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(254, 78);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox5.Size = new System.Drawing.Size(339, 90);
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "发送AT指令";
@@ -295,9 +320,11 @@
             this.groupBox6.Controls.Add(this.checkBoxMag);
             this.groupBox6.Controls.Add(this.checkBoxGyo);
             this.groupBox6.Controls.Add(this.checkBoxAcc);
-            this.groupBox6.Location = new System.Drawing.Point(12, 261);
+            this.groupBox6.Location = new System.Drawing.Point(16, 301);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(129, 186);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox6.Size = new System.Drawing.Size(172, 215);
             this.groupBox6.TabIndex = 11;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "协议配置";
@@ -305,9 +332,10 @@
             // checkBoxAtdQ
             // 
             this.checkBoxAtdQ.AutoSize = true;
-            this.checkBoxAtdQ.Location = new System.Drawing.Point(6, 105);
+            this.checkBoxAtdQ.Location = new System.Drawing.Point(8, 121);
+            this.checkBoxAtdQ.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxAtdQ.Name = "checkBoxAtdQ";
-            this.checkBoxAtdQ.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxAtdQ.Size = new System.Drawing.Size(106, 19);
             this.checkBoxAtdQ.TabIndex = 18;
             this.checkBoxAtdQ.Text = "四元数(D1)";
             this.checkBoxAtdQ.UseVisualStyleBackColor = true;
@@ -317,9 +345,10 @@
             this.checkBoxPressure.AutoSize = true;
             this.checkBoxPressure.Checked = true;
             this.checkBoxPressure.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxPressure.Location = new System.Drawing.Point(6, 122);
+            this.checkBoxPressure.Location = new System.Drawing.Point(8, 141);
+            this.checkBoxPressure.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxPressure.Name = "checkBoxPressure";
-            this.checkBoxPressure.Size = new System.Drawing.Size(68, 17);
+            this.checkBoxPressure.Size = new System.Drawing.Size(91, 19);
             this.checkBoxPressure.TabIndex = 17;
             this.checkBoxPressure.Text = "气压(F0)";
             this.checkBoxPressure.UseVisualStyleBackColor = true;
@@ -329,9 +358,10 @@
             this.checkBoxID.AutoSize = true;
             this.checkBoxID.Checked = true;
             this.checkBoxID.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxID.Location = new System.Drawing.Point(6, 19);
+            this.checkBoxID.Location = new System.Drawing.Point(8, 22);
+            this.checkBoxID.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxID.Name = "checkBoxID";
-            this.checkBoxID.Size = new System.Drawing.Size(79, 17);
+            this.checkBoxID.Size = new System.Drawing.Size(107, 19);
             this.checkBoxID.TabIndex = 16;
             this.checkBoxID.Text = "用户ID(90)";
             this.checkBoxID.UseVisualStyleBackColor = true;
@@ -341,18 +371,20 @@
             this.checkBoxAtdE.AutoSize = true;
             this.checkBoxAtdE.Checked = true;
             this.checkBoxAtdE.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAtdE.Location = new System.Drawing.Point(6, 88);
+            this.checkBoxAtdE.Location = new System.Drawing.Point(8, 102);
+            this.checkBoxAtdE.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxAtdE.Name = "checkBoxAtdE";
-            this.checkBoxAtdE.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxAtdE.Size = new System.Drawing.Size(106, 19);
             this.checkBoxAtdE.TabIndex = 15;
             this.checkBoxAtdE.Text = "欧拉角(D0)";
             this.checkBoxAtdE.UseVisualStyleBackColor = true;
             // 
             // buttonProtocol
             // 
-            this.buttonProtocol.Location = new System.Drawing.Point(57, 154);
+            this.buttonProtocol.Location = new System.Drawing.Point(76, 178);
+            this.buttonProtocol.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.buttonProtocol.Name = "buttonProtocol";
-            this.buttonProtocol.Size = new System.Drawing.Size(66, 26);
+            this.buttonProtocol.Size = new System.Drawing.Size(88, 30);
             this.buttonProtocol.TabIndex = 12;
             this.buttonProtocol.Text = "写入配置";
             this.buttonProtocol.UseVisualStyleBackColor = true;
@@ -363,9 +395,10 @@
             this.checkBoxMag.AutoSize = true;
             this.checkBoxMag.Checked = true;
             this.checkBoxMag.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxMag.Location = new System.Drawing.Point(6, 71);
+            this.checkBoxMag.Location = new System.Drawing.Point(8, 82);
+            this.checkBoxMag.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxMag.Name = "checkBoxMag";
-            this.checkBoxMag.Size = new System.Drawing.Size(81, 17);
+            this.checkBoxMag.Size = new System.Drawing.Size(106, 19);
             this.checkBoxMag.TabIndex = 14;
             this.checkBoxMag.Text = "地磁场(C0)";
             this.checkBoxMag.UseVisualStyleBackColor = true;
@@ -375,9 +408,10 @@
             this.checkBoxGyo.AutoSize = true;
             this.checkBoxGyo.Checked = true;
             this.checkBoxGyo.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxGyo.Location = new System.Drawing.Point(6, 53);
+            this.checkBoxGyo.Location = new System.Drawing.Point(8, 61);
+            this.checkBoxGyo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxGyo.Name = "checkBoxGyo";
-            this.checkBoxGyo.Size = new System.Drawing.Size(81, 17);
+            this.checkBoxGyo.Size = new System.Drawing.Size(106, 19);
             this.checkBoxGyo.TabIndex = 13;
             this.checkBoxGyo.Text = "角速度(B0)";
             this.checkBoxGyo.UseVisualStyleBackColor = true;
@@ -387,27 +421,29 @@
             this.checkBoxAcc.AutoSize = true;
             this.checkBoxAcc.Checked = true;
             this.checkBoxAcc.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxAcc.Location = new System.Drawing.Point(6, 35);
+            this.checkBoxAcc.Location = new System.Drawing.Point(8, 40);
+            this.checkBoxAcc.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.checkBoxAcc.Name = "checkBoxAcc";
-            this.checkBoxAcc.Size = new System.Drawing.Size(81, 17);
+            this.checkBoxAcc.Size = new System.Drawing.Size(106, 19);
             this.checkBoxAcc.TabIndex = 12;
             this.checkBoxAcc.Text = "加速度(A0)";
             this.checkBoxAcc.UseVisualStyleBackColor = true;
             // 
             // labelProtocol
             // 
-            this.labelProtocol.Location = new System.Drawing.Point(147, 403);
+            this.labelProtocol.Location = new System.Drawing.Point(196, 465);
+            this.labelProtocol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelProtocol.Name = "labelProtocol";
-            this.labelProtocol.Size = new System.Drawing.Size(491, 49);
+            this.labelProtocol.Size = new System.Drawing.Size(655, 57);
             this.labelProtocol.TabIndex = 10;
             this.labelProtocol.Text = "protocol";
             // 
             // FormIMUConfig
             // 
             this.AcceptButton = this.buttonSend;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(663, 492);
+            this.ClientSize = new System.Drawing.Size(884, 568);
             this.Controls.Add(this.labelProtocol);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
@@ -417,6 +453,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonExit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormIMUConfig";

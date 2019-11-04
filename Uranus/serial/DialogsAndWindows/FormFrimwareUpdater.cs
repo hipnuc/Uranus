@@ -511,7 +511,7 @@ namespace Uranus.DialogsAndWindows
                 return;
             }
 
-            Resp = WaitData(10, 50);
+            Resp = WaitData(10, 20);
             if (Resp.Length == 10)
             {
                 if ((Resp[0] == 0x5A) && (Resp[1] == 0xA7))
@@ -529,7 +529,7 @@ namespace Uranus.DialogsAndWindows
                     OnDataSend(AppRst, 0, AppRst.Length);
                 }
 
-                Thread.Sleep(20);
+                Thread.Sleep(30);
 
                 //  PING
                     ret = InjectCommand(WarpFramePacket(FramePacketType.kFramingPacketType_Ping, new byte[0]));

@@ -16,8 +16,8 @@ namespace Uranus.Utilities
 
         /// File path of CSV file.
         /// </summary>
-        public int roll { get; private set; }
-        public int column { get; private set; }
+        public int Row { get; private set; }
+        public int Col { get; private set; }
 
         /// <summary>
         /// Internal flag used to disable writes during file close.
@@ -40,8 +40,8 @@ namespace Uranus.Utilities
 
         public void Start()
         {
-            roll = 0;
-            column = 0;
+            Row = 0;
+            Col = 0;
             streamWriter = new System.IO.StreamWriter(FilePath, false);
             writesEnabled = true;
         }
@@ -57,8 +57,8 @@ namespace Uranus.Utilities
             {
                 streamWriter.Close();
             }
-            roll = 0;
-            column = 0;
+            Row = 0;
+            Col = 0;
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace Uranus.Utilities
         /// <param name="values"></param>
         public void WriteCSVline(string[] values)
         {
-            roll++;
-            column = values.Length;
+            Row++;
+            Col = values.Length;
             if (writesEnabled)
             {
 

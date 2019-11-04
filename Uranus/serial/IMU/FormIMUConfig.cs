@@ -157,7 +157,7 @@ namespace Uranus.DialogsAndWindows
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SendATCmd("AT+ODR=60");
+            SendATCmd("AT+ODR=50");
         }
 
         private void buttonMCal_Click(object sender, EventArgs e)
