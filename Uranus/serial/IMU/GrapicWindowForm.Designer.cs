@@ -33,7 +33,6 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.resetViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.horizontalRollToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centerTraceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.allToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +76,6 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.resetViewToolStripMenuItem,
             this.clearToolStripMenuItem,
-            this.toolStripSeparator2,
             this.horizontalRollToolStripMenuItem,
             this.centerTraceToolStripMenuItem,
             this.toolStripSeparator3,
@@ -106,11 +104,6 @@
             this.clearToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(252, 6);
             // 
             // horizontalRollToolStripMenuItem
             // 
@@ -278,7 +271,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem resetViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem horizontalRollToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem centerTraceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem allToolStripMenuItem1;

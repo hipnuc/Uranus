@@ -529,7 +529,7 @@ namespace Uranus.DialogsAndWindows
                     OnDataSend(AppRst, 0, AppRst.Length);
                 }
 
-                Thread.Sleep(30);
+                Thread.Sleep(20);
 
                 //  PING
                     ret = InjectCommand(WarpFramePacket(FramePacketType.kFramingPacketType_Ping, new byte[0]));

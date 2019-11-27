@@ -115,7 +115,7 @@ namespace Uranus
             {
                 DropDownCollection.Add("COM" + Regex.Replace(portName.Substring("COM".Length, portName.Length - "COM".Length), "[^.0-9]", "\0") + ", " + 115200.ToString());
             }
-            DropDownCollection.Add(last_port_name + ", " + last_baud.ToString());
+            DropDownCollection.Add(last_port_name + "," + last_baud.ToString());
             DropDownCollection.Add(toolStripMenuItemOpenSerialConnectionDialog);
         }
 
