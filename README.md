@@ -1,1 +1,7 @@
-# 超核内部C#上位机branch
+## Uranus
+
+HiPNUC Uranus PC software to demonstrate and explore HiPNUC products.
+
+
+
+Written by C#
