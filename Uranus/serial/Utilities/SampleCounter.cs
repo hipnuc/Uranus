@@ -22,7 +22,7 @@ namespace Uranus.Utilities
             // Initialise variables
             prevSamplesReceived = 0;
             SamplesReceived = 0;
-            aTimer = new AccurateTimer(new Action(aTimerTick1), 1000); // In milliseconds. 10 = 1/100th second.
+            aTimer = new AccurateTimer(new Action(AccTimerTick1), 1000); // In milliseconds. 10 = 1/100th second.
         }
 
         public void Increment(int count)
@@ -38,7 +38,7 @@ namespace Uranus.Utilities
             SampleRate = 0;
         }
 
-        private void aTimerTick1()
+        private void AccTimerTick1()
         {
             SampleRate = SamplesReceived - prevSamplesReceived;
             prevSamplesReceived = SamplesReceived;
