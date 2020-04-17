@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Windows.Forms;
-
 using System.Windows.Media.Media3D;
 using QuaternionView;
 using Uranus.Data;
@@ -76,16 +70,14 @@ namespace Uranus.DialogsAndWindows
 
         public void SetIMUData(IMUData data)
         {
-            if (data != null && data.AvailableItem != null)
+            if (data.SingleNode.Eul != null)
             {
-                if (data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationQuat))
-                {
-                    this.SetQuaternion(data.Quaternion[0], data.Quaternion[1], data.Quaternion[2], data.Quaternion[3]);
-                }
-                else if (data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationEular) || data.AvailableItem.Contains((byte)IMUData.ItemID.kItemRotationEular2))
-                {
-                    this.SetPitchRollYaw(data.EulerAngles[0], data.EulerAngles[1], data.EulerAngles[2]);
-                }
+                this.SetPitchRollYaw(data.SingleNode.Eul[0], data.SingleNode.Eul[1], data.SingleNode.Eul[2]);
+            }
+
+            if (data.SingleNode.Quat != null)
+            {
+                this.SetQuaternion(data.SingleNode.Quat[0], data.SingleNode.Quat[1], data.SingleNode.Quat[2], data.SingleNode.Quat[3]);
             }
 
         }

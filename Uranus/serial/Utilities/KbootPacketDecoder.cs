@@ -11,12 +11,12 @@ namespace Uranus.Utilities
         public delegate void KBootDecoderDataReceivedEventHandler(object sender, byte[] data, int len);
         public event KBootDecoderDataReceivedEventHandler OnPacketRecieved;
 
-        private UInt16 MAX_PACKET_LEN = 512;
+        private UInt16 MAX_PACKET_LEN = 2048;
         private UInt16 DataLen;
         private status state = status.kStatus_Idle;
         private byte cmd;
         private int DataCounter = 0;
-        private byte[] DataBuf = new byte[512];
+        private byte[] DataBuf = new byte[2048];
         private Queue<byte> RxQueue = new Queue<byte>();
         private UInt16 CRCReceived;
         private UInt16 CRCCalculated;
@@ -47,9 +47,6 @@ namespace Uranus.Utilities
             }
         }
 
-        /// <summary>
-        /// Get Data.
-        /// </summary>
     public void Input(byte[] buffer)
     {
         foreach (byte c in buffer)
@@ -61,9 +58,6 @@ namespace Uranus.Utilities
         }
     }
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
         public KbootPacketDecoder()
         {
             RxQueue.Clear();

@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using System.Diagnostics;
 using Uranus.Utilities;
 using Uranus.Data;
-using Uranus.DialogsAndWindows;
 
 namespace Uranus.DialogsAndWindows
 {
@@ -57,15 +49,7 @@ namespace Uranus.DialogsAndWindows
         {
             fmConfig.PutRawData(buffer);
             KbootDecoder.Input(buffer);
-            
-            //IMUData data;
-            //data =  SxDecode.Decode(buffer);
-            //if (data != null)
-            //{
-            //    SampleCounter.Increment(1);
-            //    imuData = data;
-            //    DoOnDataReceived(imuData);
-            //}
+
 
         }
 
@@ -78,44 +62,35 @@ namespace Uranus.DialogsAndWindows
 
         private void ReflashData(IMUData data)
         {
-                //double Pa = 0;
-                //Pa = (double)44330 * (1.0 - Math.Pow((Convert.ToDouble(data.Pressure) / (double)101325), 0.190295));
-                if (data.AvailableItem == null)
+            labelData.Text = "";
+            labelData.Text = imuData.ToString();
+
+            if (imuData.SingleNode.Eul != null)
+            {
+                attitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(-(double)imuData.SingleNode.Eul[1], (double)imuData.SingleNode.Eul[0]);
+
+                int aircraftHeading = 0;
+                try
                 {
-                    return;
+                    aircraftHeading = Convert.ToInt16(imuData.SingleNode.Eul[2]);
                 }
-                else
+                catch
                 {
-                    labelRawData.Text = "";
-                }
-
-                labelRawData.Text = imuData.ToString();
-                if (imuData.EulerAngles != null)
-                {
-                    attitudeIndicatorInstrumentControl1.SetAttitudeIndicatorParameters(-(double)imuData.EulerAngles[0], (double)imuData.EulerAngles[1]);
-
-                    int aircraftHeading = 0;
-                    try
-                    {
-                         aircraftHeading = Convert.ToInt16(imuData.EulerAngles[2]);
-                    }
-                    catch
-                    {
-                    }
-
-                    // dual to headingIndicatorInstrumentControl1 error, use the negnate number
-                    aircraftHeading = -aircraftHeading;
-
-                    if (aircraftHeading < 0)
-                    {
-                        aircraftHeading += 360;
-                    }
-                    headingIndicatorInstrumentControl1.SetHeadingIndicatorParameters(aircraftHeading);
                 }
 
-                // altimeterInstrumentControl1.SetAlimeterParameters(Convert.ToInt32(Pa));
-                airSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(SampleCounter.SampleRate);
-                label7.Text = "接受速率: " + SampleCounter.SampleRate.ToString() + "Hz";
+                // dual to headingIndicatorInstrumentControl1 error, use the negnate number
+                aircraftHeading = -aircraftHeading;
+
+                if (aircraftHeading < 0)
+                {
+                    aircraftHeading += 360;
+                }
+                headingIndicatorInstrumentControl1.SetHeadingIndicatorParameters(aircraftHeading);
+            }
+
+            // altimeterInstrumentControl1.SetAlimeterParameters(Convert.ToInt32(Pa));
+            airSpeedIndicatorInstrumentControl1.SetAirSpeedIndicatorParameters(SampleCounter.SampleRate);
+            label7.Text = "接受速率: " + SampleCounter.SampleRate.ToString() + "Hz";
         }
 
         private void AddGraphData(string name, DateTime timestamp, int index, float trace)
@@ -136,32 +111,32 @@ namespace Uranus.DialogsAndWindows
             }
 
             fmConfig.PutPacket(this, data);
-            if (data.GyoRaw != null)
+            if (data.SingleNode.Gyr != null)
             {
-                AddGraphData("Gyroscope", DateTime.Now, 0, data.GyoRaw[0]);
-                AddGraphData("Gyroscope", DateTime.Now, 1, data.GyoRaw[1]);
-                AddGraphData("Gyroscope", DateTime.Now, 2, data.GyoRaw[2]);
+                AddGraphData("Gyroscope", DateTime.Now, 0, data.SingleNode.Gyr[0]);
+                AddGraphData("Gyroscope", DateTime.Now, 1, data.SingleNode.Gyr[1]);
+                AddGraphData("Gyroscope", DateTime.Now, 2, data.SingleNode.Gyr[2]);
             }
 
-            if (data.AccRaw != null)
+            if (data.SingleNode.Acc != null)
             {
-                AddGraphData("Accelerometer", DateTime.Now, 0, data.AccRaw[0]);
-                AddGraphData("Accelerometer", DateTime.Now, 1, data.AccRaw[1]);
-                AddGraphData("Accelerometer", DateTime.Now, 2, data.AccRaw[2]);
+                AddGraphData("Accelerometer", DateTime.Now, 0, data.SingleNode.Acc[0]);
+                AddGraphData("Accelerometer", DateTime.Now, 1, data.SingleNode.Acc[1]);
+                AddGraphData("Accelerometer", DateTime.Now, 2, data.SingleNode.Acc[2]);
             }
 
-            if (data.MagRaw != null)
+            if (data.SingleNode.Mag != null)
             {
-                AddGraphData("Magnetometer", DateTime.Now, 0, data.MagRaw[0]);
-                AddGraphData("Magnetometer", DateTime.Now, 1, data.MagRaw[1]);
-                AddGraphData("Magnetometer", DateTime.Now, 2, data.MagRaw[2]);
+                AddGraphData("Magnetometer", DateTime.Now, 0, data.SingleNode.Mag[0]);
+                AddGraphData("Magnetometer", DateTime.Now, 1, data.SingleNode.Mag[1]);
+                AddGraphData("Magnetometer", DateTime.Now, 2, data.SingleNode.Mag[2]);
             }
 
-            if (data.EulerAngles != null)
+            if (data.SingleNode.Eul != null)
             {
-                AddGraphData("Euler Angles", DateTime.Now, 0, data.EulerAngles[0]);
-                AddGraphData("Euler Angles", DateTime.Now, 1, data.EulerAngles[1]);
-                AddGraphData("Euler Angles", DateTime.Now, 2, data.EulerAngles[2]);
+                AddGraphData("Euler Angles", DateTime.Now, 0, data.SingleNode.Eul[0]);
+                AddGraphData("Euler Angles", DateTime.Now, 1, data.SingleNode.Eul[1]);
+                AddGraphData("Euler Angles", DateTime.Now, 2, data.SingleNode.Eul[2]);
             }
 
         }
@@ -237,18 +212,18 @@ namespace Uranus.DialogsAndWindows
         {
             Form3DDisplay = new Form3DView();
             Application.Run((Form)Form3DDisplay);
-        } 
+        }
 
         public void Open3DView()
         {
-                Thread3D = new Thread(thread3D);//创建新线程  
-                Thread3D.SetApartmentState(ApartmentState.STA);
-                Thread3D.Start();
+            Thread3D = new Thread(thread3D);//创建新线程  
+            Thread3D.SetApartmentState(ApartmentState.STA);
+            Thread3D.Start();
         }
 
         public void Close3DView()
         {
-                Thread3D.Abort();
+            Thread3D.Abort();
         }
         #endregion
 

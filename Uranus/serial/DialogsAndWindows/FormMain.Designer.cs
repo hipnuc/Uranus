@@ -66,7 +66,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(832, 28);
+            this.menuStrip.Size = new System.Drawing.Size(919, 28);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -83,14 +83,14 @@
             this.toolStripMenuItemSerial.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemOpenSerialConnectionDialog});
             this.toolStripMenuItemSerial.Name = "toolStripMenuItemSerial";
-            this.toolStripMenuItemSerial.Size = new System.Drawing.Size(216, 26);
+            this.toolStripMenuItemSerial.Size = new System.Drawing.Size(116, 26);
             this.toolStripMenuItemSerial.Text = "串口";
             this.toolStripMenuItemSerial.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripMenuItemSerialPort_DropDownItemClicked);
             // 
             // toolStripMenuItemOpenSerialConnectionDialog
             // 
             this.toolStripMenuItemOpenSerialConnectionDialog.Name = "toolStripMenuItemOpenSerialConnectionDialog";
-            this.toolStripMenuItemOpenSerialConnectionDialog.Size = new System.Drawing.Size(216, 26);
+            this.toolStripMenuItemOpenSerialConnectionDialog.Size = new System.Drawing.Size(93, 26);
             this.toolStripMenuItemOpenSerialConnectionDialog.Text = "...";
             // 
             // toolStripMenuItemGraph
@@ -224,28 +224,28 @@
             this.tabControl1.Controls.Add(this.tabPageMessage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 28);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(832, 482);
+            this.tabControl1.Size = new System.Drawing.Size(919, 537);
             this.tabControl1.TabIndex = 4;
             this.tabControl1.TabStop = false;
             // 
             // TabPageIMUUI
             // 
             this.TabPageIMUUI.Location = new System.Drawing.Point(4, 25);
-            this.TabPageIMUUI.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TabPageIMUUI.Margin = new System.Windows.Forms.Padding(4);
             this.TabPageIMUUI.Name = "TabPageIMUUI";
-            this.TabPageIMUUI.Size = new System.Drawing.Size(824, 453);
+            this.TabPageIMUUI.Size = new System.Drawing.Size(911, 508);
             this.TabPageIMUUI.TabIndex = 3;
             this.TabPageIMUUI.Text = "姿态显示";
             // 
             // tabPageMessage
             // 
             this.tabPageMessage.Location = new System.Drawing.Point(4, 25);
-            this.tabPageMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPageMessage.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageMessage.Name = "tabPageMessage";
-            this.tabPageMessage.Size = new System.Drawing.Size(824, 455);
+            this.tabPageMessage.Size = new System.Drawing.Size(824, 453);
             this.tabPageMessage.TabIndex = 4;
             this.tabPageMessage.Text = "消息";
             // 
@@ -254,12 +254,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(832, 510);
+            this.ClientSize = new System.Drawing.Size(919, 565);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Main";

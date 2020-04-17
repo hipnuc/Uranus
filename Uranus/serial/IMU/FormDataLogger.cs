@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using Uranus.DialogsAndWindows;
 using Uranus.Utilities;
 using Uranus.Data;
 
@@ -39,10 +31,10 @@ namespace Uranus.DialogsAndWindows
         {
                 if (isInCSVTitle == true)
                 {
-                    csvFileWriter.WriteCSVline(imuData.CsvHeader);
+                    csvFileWriter.WriteCSVline(imuData.CSVHeaders.ToArray());
                     isInCSVTitle = false;
                 }
-                csvFileWriter.WriteCSVline(imuData.CsvData);
+                csvFileWriter.WriteCSVline(imuData.CSVData.ToArray());
         }
 
         void OnDecoded(object sender, byte[] data, int len)
