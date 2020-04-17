@@ -297,6 +297,11 @@ namespace Uranus.Data
                         imuData.ToStringData += string.Format("{0,-8}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "地磁场:", imuData.SingleNode.Mag[0], imuData.SingleNode.Mag[1], imuData.SingleNode.Mag[2]);
                         imuData.ToStringData += string.Format("{0,-8}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "欧拉角RPY:", imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[2]);
                         imuData.ToStringData += string.Format("{0,-8}{1,7:f3}{2,7:f3}{3,7:f3}{4,7:f3}\r\n", "四元数:", imuData.SingleNode.Quat[0], imuData.SingleNode.Quat[1], imuData.SingleNode.Quat[2], imuData.SingleNode.Quat[3]);
+
+                        _CSVHeader += string.Format("AccX, AccY, AccZ, GyrX, GyrY, GyrZ, MagX, MagY, MagZ, Roll, Pitch, Yaw, Qw, Qx, Qy, Qz\r\n");
+                        _CSVData += string.Format("{0:f3}, {1:f3}, {2:f3}, {3:f2}, {4:f2}, {5:f2}, {6:f2}, {7:f2}, {8:f2}, {9:f2}, {10:f2}, {11:f2}, {12:f3}, {13:f3}, {14:f3}, {15:f3}", imuData.SingleNode.Acc[0], imuData.SingleNode.Acc[1], imuData.SingleNode.Acc[2], imuData.SingleNode.Gyr[0], imuData.SingleNode.Gyr[1], imuData.SingleNode.Gyr[2], imuData.SingleNode.Mag[0], imuData.SingleNode.Mag[1], imuData.SingleNode.Mag[2], imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[2], imuData.SingleNode.Quat[0], imuData.SingleNode.Quat[1], imuData.SingleNode.Quat[2], imuData.SingleNode.Quat[3]);
+                        imuData.CSVHeaders.Add(_CSVHeader);
+                        imuData.CSVData.Add(_CSVData);
                         offset += 76;
                         break;
                     case (byte)ItemID.kItemRFData: /* new data */
@@ -342,7 +347,7 @@ namespace Uranus.Data
                             imuData.ToStringData += string.Format("{0,0}{1,5:f2} {2,5:f2} {3,5:f2}\r\n", "Eul:", n.Eul[0], n.Eul[1], n.Eul[2]);
                             imuData.ToStringData += string.Format("{0,14}{1,5:f3} {2,5:f3} {3,5:f3} {4,5:f3}\r\n", "Quat:", n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3]);
 
-                            _CSVHeader += string.Format("P{0}, R{0}, Y{0}, W{0}, X{0}, Y{0}, Z{0},", i);
+                            _CSVHeader += string.Format("P{0}, R{0}, Y{0}, W{0}, X{0}, Y{0}, Z{0},", n.ID);
                             _CSVData += string.Format("{0:f2}, {1:f2}, {2:f2}, {3:f3}, {4:f3}, {5:f3}, {6:f3},", n.Eul[0], n.Eul[1], n.Eul[2], n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3]);
 
                             imuData.RFNodeList.Add(n);

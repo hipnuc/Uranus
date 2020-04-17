@@ -61,16 +61,6 @@ namespace Uranus.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] AvionicsInstrumentControlDemo {
-            get {
-                object obj = ResourceManager.GetObject("AvionicsInstrumentControlDemo", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon favicon {
@@ -146,15 +136,15 @@ namespace Uranus.Properties {
         ///1. 将所有图标改为 ZedGraph
         ///2. 细微调节美化系统界面
         ///
-        ///V1.3.3.2
+        ///V1.2.3.2
         ///1. IMU config 窗体关闭时会发送 AT+EOUT=1(开启数据输出)
         ///2. 当子窗体处于非活动状态时，关闭数据显示
         ///3. KBOOT调整，执行复位后发送PING 以让下位机获得当前波特率（适用于 KBOOT ROM）
         ///
-        ///V1.3.3.3
+        ///V1.2.3.3
         ///1. IMU界面显示增加气压显示 取消ID及KEY显示
         ///
-        ///V1.3.3.4
+        ///V1.2.3.4
         ///1. 解析包过程 做成单独的线程来执行
         ///2. 增加TeeChat替换原来的ZedGraphic（未开放）
         ///3. 增加新协议(CHLink)包解析支持
@@ -164,16 +154,6 @@ namespace Uranus.Properties {
         internal static string updatelog {
             get {
                 return ResourceManager.GetString("updatelog", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] ZedGraph {
-            get {
-                object obj = ResourceManager.GetObject("ZedGraph", resourceCulture);
-                return ((byte[])(obj));
             }
         }
     }
