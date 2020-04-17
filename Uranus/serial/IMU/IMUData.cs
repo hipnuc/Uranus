@@ -347,7 +347,7 @@ namespace Uranus.Data
                             imuData.ToStringData += string.Format("{0,0}{1,5:f2} {2,5:f2} {3,5:f2}\r\n", "Eul:", n.Eul[0], n.Eul[1], n.Eul[2]);
                             imuData.ToStringData += string.Format("{0,14}{1,5:f3} {2,5:f3} {3,5:f3} {4,5:f3}\r\n", "Quat:", n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3]);
 
-                            _CSVHeader += string.Format("P{0}, R{0}, Y{0}, W{0}, X{0}, Y{0}, Z{0},", n.ID);
+                            _CSVHeader += string.Format("Roll{0}, Pitch{0}, Yaw{0}, W{0}, X{0}, Y{0}, Z{0},", n.ID);
                             _CSVData += string.Format("{0:f2}, {1:f2}, {2:f2}, {3:f3}, {4:f3}, {5:f3}, {6:f3},", n.Eul[0], n.Eul[1], n.Eul[2], n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3]);
 
                             imuData.RFNodeList.Add(n);
