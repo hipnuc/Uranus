@@ -61,8 +61,8 @@ namespace Uranus.Data
             kItemRFQuat = 0x71,   /* 4*16 float quat */
             kItemRFEul = 0x72,
             kItemRFAcc = 0x75,
-            kItemRFGyrCalibrated = 0x78,
-            kItemRFMagCalibrated = 0x7A,
+            kItemRFGyr = 0x78,
+            kItemRFMag = 0x7A,
             kItemExtend = 0x61,   /* extend data */
             kItemEnd = 0x00,
         };
@@ -220,7 +220,7 @@ namespace Uranus.Data
                         imuData.CSVData.Add(_CSVData);
                         offset += 1 + 6 * imuData.GW.node_num;
                         break;
-                    case (byte)ItemID.kItemRFGyrCalibrated:
+                    case (byte)ItemID.kItemRFGyr:
                         imuData.RFGyr = new Int16[imuData.GW.node_num, 3];
                         imuData.ToStringData += string.Format("RFGyrCalibrated: X Y Z\r\n");
                         _CSVHeader = "";

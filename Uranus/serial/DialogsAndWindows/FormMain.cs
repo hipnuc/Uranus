@@ -37,7 +37,7 @@ namespace Uranus
         private SerialPort serialPort = new SerialPort();
         private Connection m_connection = new Connection();
         private KbootPacketDecoder KbootDecoder = new KbootPacketDecoder();
-       
+
         #endregion
 
         #region Form load and close
@@ -59,7 +59,7 @@ namespace Uranus
 
         private void Main_Load(object sender, EventArgs e)
         {
-             fmIMU = new FormIMU(m_connection);
+            fmIMU = new FormIMU(m_connection);
             DockForm(fmIMU, TabPageIMUUI);
 
             fmTermial = new TerminalForm();
@@ -73,7 +73,7 @@ namespace Uranus
                 iniFile.Write("SerialPort", "Baudrate", "115200");
             }
             RefreshSerialPortList(toolStripMenuItemSerial);
-           
+
             m_connection.OnSendData += new Connection.SendDataEventHandler(SendSerialPort);
             KbootDecoder.OnPacketRecieved += new KbootPacketDecoder.KBootDecoderDataReceivedEventHandler(OnKbootDecoderDataReceived);
             serialPort.WriteTimeout = 1000;
@@ -136,7 +136,7 @@ namespace Uranus
                 if (toolStripMenuItem.Checked)
                 {
                     string text = toolStripMenuItem.Text;
-                    text = text.Substring(text.IndexOf(',')+1).Trim();
+                    text = text.Substring(text.IndexOf(',') + 1).Trim();
                     Baudrate = Convert.ToInt32(text);
                     break;
                 }
@@ -171,7 +171,7 @@ namespace Uranus
             {
                 serialPort.Write(buffer, offset, count);
             }
-            catch ( Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 ret = false;
@@ -198,7 +198,7 @@ namespace Uranus
         /// </summary>
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-                // Get bytes from serial port
+            // Get bytes from serial port
             if (serialPort.IsOpen)
             {
                 int bytesToRead = serialPort.BytesToRead;
@@ -232,7 +232,7 @@ namespace Uranus
                 FormGetSerialValue fmGetValue = new FormGetSerialValue();
                 if (fmGetValue.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    if(OpenSerialPort(fmGetValue.PortName, fmGetValue.Baudrate))
+                    if (OpenSerialPort(fmGetValue.PortName, fmGetValue.Baudrate))
                     {
                         // record successful port
                         iniFile.Write("SerialPort", "Baudrate", fmGetValue.Baudrate.ToString());
@@ -261,7 +261,7 @@ namespace Uranus
             if (!OpenSerialPort(GetPortName(item), GetBaudrate(item)))
             {
                 // uncheck serial port if open fails
-                ((ToolStripMenuItem)e.ClickedItem).Checked = false;    
+                ((ToolStripMenuItem)e.ClickedItem).Checked = false;
             }
             else
             {
@@ -270,7 +270,7 @@ namespace Uranus
                 iniFile.Write("SerialPort", "Name", GetPortName(item));
             }
         }
-        
+
 
         #endregion
 
@@ -305,13 +305,13 @@ namespace Uranus
         #region ToolMenu
         private void toolStripMenuItemUpdater_Click(object sender, EventArgs e)
         {
-           FormFrimwareUpdater  fmBootloader = new FormFrimwareUpdater(m_connection);
+            FormFrimwareUpdater fmBootloader = new FormFrimwareUpdater(m_connection);
             fmBootloader.ShowDialog();
         }
 
         private void toolStripMenuItemSerialTerminal_Click(object sender, EventArgs e)
         {
-            SerialTerminalForm fmTerminal  = new SerialTerminalForm(m_connection);
+            SerialTerminalForm fmTerminal = new SerialTerminalForm(m_connection);
             if (fmTerminal.IsDisposed == true)
             {
                 fmTerminal = new SerialTerminalForm(m_connection);
@@ -375,7 +375,7 @@ namespace Uranus
             //}
 
         }
-#endregion
+        #endregion
 
         private void toolStripMenuItem3DView_Click(object sender, EventArgs e)
         {
