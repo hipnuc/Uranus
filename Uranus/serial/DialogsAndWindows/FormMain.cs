@@ -361,18 +361,6 @@ namespace Uranus
                 }
             }
 
-            //if (device_data != null)
-            //{
-            //    while (GraphItem.DropDownItems.Count > 7)
-            //    {
-            //        GraphItem.DropDownItems.RemoveAt(GraphItem.DropDownItems.Count -1);
-            //    }
-
-            //    for (int i = 1; i < device_data.CsvHeader.Length; i++)
-            //    {
-            //        GraphItem.DropDownItems.Add(device_data.CsvHeader[i]);
-            //    }
-            //}
 
         }
         #endregion

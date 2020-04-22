@@ -111,30 +111,30 @@ namespace Uranus.DialogsAndWindows
             fmConfig.PutPacket(this, data);
             if (data.SingleNode.Gyr != null)
             {
-                AddGraphData("Gyr(X)", DateTime.Now, 0, data.SingleNode.Gyr[0]);
-                AddGraphData("Gyr(Y)", DateTime.Now, 1, data.SingleNode.Gyr[1]);
-                AddGraphData("Gyr(Z)", DateTime.Now, 2, data.SingleNode.Gyr[2]);
+                AddGraphData("Gyroscope", DateTime.Now, 0, data.SingleNode.Gyr[0]);
+                AddGraphData("Gyroscope", DateTime.Now, 1, data.SingleNode.Gyr[1]);
+                AddGraphData("Gyroscope", DateTime.Now, 2, data.SingleNode.Gyr[2]);
             }
 
             if (data.SingleNode.Acc != null)
             {
-                AddGraphData("Acc(X)", DateTime.Now, 0, data.SingleNode.Acc[0]);
-                AddGraphData("Acc(Y)", DateTime.Now, 1, data.SingleNode.Acc[1]);
-                AddGraphData("Acc(Z)", DateTime.Now, 2, data.SingleNode.Acc[2]);
+                AddGraphData("Accelerometer", DateTime.Now, 0, data.SingleNode.Acc[0]);
+                AddGraphData("Accelerometer", DateTime.Now, 1, data.SingleNode.Acc[1]);
+                AddGraphData("Accelerometer", DateTime.Now, 2, data.SingleNode.Acc[2]);
             }
 
             if (data.SingleNode.Mag != null)
             {
-                AddGraphData("Mag(X)", DateTime.Now, 0, data.SingleNode.Mag[0]);
-                AddGraphData("Mag(Y)", DateTime.Now, 1, data.SingleNode.Mag[1]);
-                AddGraphData("Mag(Z)", DateTime.Now, 2, data.SingleNode.Mag[2]);
+                AddGraphData("Magnetometer", DateTime.Now, 0, data.SingleNode.Mag[0]);
+                AddGraphData("Magnetometer", DateTime.Now, 1, data.SingleNode.Mag[1]);
+                AddGraphData("Magnetometer", DateTime.Now, 2, data.SingleNode.Mag[2]);
             }
 
             if (data.SingleNode.Eul != null)
             {
-                AddGraphData("Euler Angles(R)", DateTime.Now, 0, data.SingleNode.Eul[0]);
-                AddGraphData("Euler Angles(P)", DateTime.Now, 1, data.SingleNode.Eul[1]);
-                AddGraphData("Euler Angles(Y)", DateTime.Now, 2, data.SingleNode.Eul[2]);
+                AddGraphData("Euler Angles", DateTime.Now, 0, data.SingleNode.Eul[0]);
+                AddGraphData("Euler Angles", DateTime.Now, 1, data.SingleNode.Eul[1]);
+                AddGraphData("Euler Angles", DateTime.Now, 2, data.SingleNode.Eul[2]);
             }
 
         }
