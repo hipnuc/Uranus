@@ -15,6 +15,7 @@ namespace Uranus.Data
         public struct Node
         {
             public byte ID;
+            public UInt32 TS;
             public float[] Quat;
             public float[] Eul; /* In Roll Pitch Yaw Sequence */
             public float[] Acc;
@@ -272,7 +273,7 @@ namespace Uranus.Data
                         imuData.SingleNode.Eul = new float[3];
 
                         imuData.SingleNode.ID = buf[offset + 1];
-
+                        imuData.SingleNode.TS = BitConverter.ToUInt32(buf, offset + 8);
 
                         imuData.SingleNode.Acc[0] = (float)BitConverter.ToSingle(buf, offset + 12 + 0 * 4);
                         imuData.SingleNode.Acc[1] = (float)BitConverter.ToSingle(buf, offset + 12 + 1 * 4);
@@ -292,11 +293,12 @@ namespace Uranus.Data
                         imuData.SingleNode.Quat[3] = (float)BitConverter.ToSingle(buf, offset + 60 + 3 * 4);
 
                         imuData.ToStringData += string.Format("ID:{0}\r\n", imuData.SingleNode.ID);
-                        imuData.ToStringData += string.Format("{0,-8}{1,7:f3}{2,7:f3}{3,7:f3}\r\n", "加速度:", imuData.SingleNode.Acc[0], imuData.SingleNode.Acc[1], imuData.SingleNode.Acc[2]);
-                        imuData.ToStringData += string.Format("{0,-8}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "角速度:", imuData.SingleNode.Gyr[0], imuData.SingleNode.Gyr[1], imuData.SingleNode.Gyr[2]);
-                        imuData.ToStringData += string.Format("{0,-8}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "地磁场:", imuData.SingleNode.Mag[0], imuData.SingleNode.Mag[1], imuData.SingleNode.Mag[2]);
-                        imuData.ToStringData += string.Format("{0,-8}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "欧拉角RPY:", imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[2]);
-                        imuData.ToStringData += string.Format("{0,-8}{1,7:f3}{2,7:f3}{3,7:f3}{4,7:f3}\r\n", "四元数:", imuData.SingleNode.Quat[0], imuData.SingleNode.Quat[1], imuData.SingleNode.Quat[2], imuData.SingleNode.Quat[3]);
+                        imuData.ToStringData += string.Format("TimeStamp:{0}\r\n", imuData.SingleNode.TS);
+                        imuData.ToStringData += string.Format("{0,-8}{1,7:f3}{2,7:f3}{3,7:f3}\r\n", "Acc:     ", imuData.SingleNode.Acc[0], imuData.SingleNode.Acc[1], imuData.SingleNode.Acc[2]);
+                        imuData.ToStringData += string.Format("{0,-8}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "Gyr:     ", imuData.SingleNode.Gyr[0], imuData.SingleNode.Gyr[1], imuData.SingleNode.Gyr[2]);
+                        imuData.ToStringData += string.Format("{0,-8}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "Mag:     ", imuData.SingleNode.Mag[0], imuData.SingleNode.Mag[1], imuData.SingleNode.Mag[2]);
+                        imuData.ToStringData += string.Format("{0,-8}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "Eul(RPY):", imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[2]);
+                        imuData.ToStringData += string.Format("{0,-8}{1,7:f3}{2,7:f3}{3,7:f3}{4,7:f3}\r\n", "Quat:", imuData.SingleNode.Quat[0], imuData.SingleNode.Quat[1], imuData.SingleNode.Quat[2], imuData.SingleNode.Quat[3]);
 
                         _CSVHeader += string.Format("AccX, AccY, AccZ, GyrX, GyrY, GyrZ, MagX, MagY, MagZ, Roll, Pitch, Yaw, Qw, Qx, Qy, Qz\r\n");
                         _CSVData += string.Format("{0:f3}, {1:f3}, {2:f3}, {3:f2}, {4:f2}, {5:f2}, {6:f2}, {7:f2}, {8:f2}, {9:f2}, {10:f2}, {11:f2}, {12:f3}, {13:f3}, {14:f3}, {15:f3}", imuData.SingleNode.Acc[0], imuData.SingleNode.Acc[1], imuData.SingleNode.Acc[2], imuData.SingleNode.Gyr[0], imuData.SingleNode.Gyr[1], imuData.SingleNode.Gyr[2], imuData.SingleNode.Mag[0], imuData.SingleNode.Mag[1], imuData.SingleNode.Mag[2], imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[2], imuData.SingleNode.Quat[0], imuData.SingleNode.Quat[1], imuData.SingleNode.Quat[2], imuData.SingleNode.Quat[3]);
@@ -342,6 +344,7 @@ namespace Uranus.Data
                             n.Quat[3] = BitConverter.ToSingle(buf, 68 + 76 * i + 3 * 4);
 
                             n.Prs = 0;
+                            n.TS = 0;
 
                             imuData.ToStringData += string.Format("Node[{0}]:  ", n.ID);
                             imuData.ToStringData += string.Format("{0,0}{1,5:f2} {2,5:f2} {3,5:f2}\r\n", "Eul:", n.Eul[0], n.Eul[1], n.Eul[2]);
