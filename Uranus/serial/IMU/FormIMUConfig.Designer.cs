@@ -56,7 +56,6 @@
             this.checkBoxMag = new System.Windows.Forms.CheckBox();
             this.checkBoxGyo = new System.Windows.Forms.CheckBox();
             this.checkBoxAcc = new System.Windows.Forms.CheckBox();
-            this.labelProtocol = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -396,22 +395,12 @@
             this.checkBoxAcc.Text = "加速度(A0)";
             this.checkBoxAcc.UseVisualStyleBackColor = true;
             // 
-            // labelProtocol
-            // 
-            this.labelProtocol.Location = new System.Drawing.Point(196, 465);
-            this.labelProtocol.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelProtocol.Name = "labelProtocol";
-            this.labelProtocol.Size = new System.Drawing.Size(655, 57);
-            this.labelProtocol.TabIndex = 10;
-            this.labelProtocol.Text = "protocol";
-            // 
             // FormIMUConfig
             // 
             this.AcceptButton = this.buttonSend;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 568);
-            this.Controls.Add(this.labelProtocol);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
@@ -465,7 +454,6 @@
         private System.Windows.Forms.CheckBox checkBoxAtdE;
         private System.Windows.Forms.CheckBox checkBoxPressure;
         private System.Windows.Forms.CheckBox checkBoxID;
-        private System.Windows.Forms.Label labelProtocol;
         private System.Windows.Forms.CheckBox checkBoxAtdQ;
         private System.Windows.Forms.CheckBox checkBox0x91;
         private System.Windows.Forms.Label label2;

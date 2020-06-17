@@ -51,6 +51,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabPageIMUUI = new System.Windows.Forms.TabPage();
             this.tabPageMessage = new System.Windows.Forms.TabPage();
+            this.toolStripMenuItemRegsConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -162,7 +163,8 @@
             this.toolStripMenuItemConfig,
             this.toolStripMenuItemUpdater,
             this.toolStripMenuItemDataLogger,
-            this.toolStripMenuItemSerialTerminal});
+            this.toolStripMenuItemSerialTerminal,
+            this.toolStripMenuItemRegsConfig});
             this.toolStripMenuItemTools.Name = "toolStripMenuItemTools";
             this.toolStripMenuItemTools.Size = new System.Drawing.Size(53, 24);
             this.toolStripMenuItemTools.Text = "工具";
@@ -170,28 +172,28 @@
             // toolStripMenuItemConfig
             // 
             this.toolStripMenuItemConfig.Name = "toolStripMenuItemConfig";
-            this.toolStripMenuItemConfig.Size = new System.Drawing.Size(148, 26);
+            this.toolStripMenuItemConfig.Size = new System.Drawing.Size(216, 26);
             this.toolStripMenuItemConfig.Text = "配置模块";
             this.toolStripMenuItemConfig.Click += new System.EventHandler(this.toolStripMenuItemConfig_Click);
             // 
             // toolStripMenuItemUpdater
             // 
             this.toolStripMenuItemUpdater.Name = "toolStripMenuItemUpdater";
-            this.toolStripMenuItemUpdater.Size = new System.Drawing.Size(148, 26);
+            this.toolStripMenuItemUpdater.Size = new System.Drawing.Size(216, 26);
             this.toolStripMenuItemUpdater.Text = "固件升级";
             this.toolStripMenuItemUpdater.Click += new System.EventHandler(this.toolStripMenuItemUpdater_Click);
             // 
             // toolStripMenuItemDataLogger
             // 
             this.toolStripMenuItemDataLogger.Name = "toolStripMenuItemDataLogger";
-            this.toolStripMenuItemDataLogger.Size = new System.Drawing.Size(148, 26);
+            this.toolStripMenuItemDataLogger.Size = new System.Drawing.Size(216, 26);
             this.toolStripMenuItemDataLogger.Text = "数据记录";
             this.toolStripMenuItemDataLogger.Click += new System.EventHandler(this.toolStripMenuItemDataLogger_Click);
             // 
             // toolStripMenuItemSerialTerminal
             // 
             this.toolStripMenuItemSerialTerminal.Name = "toolStripMenuItemSerialTerminal";
-            this.toolStripMenuItemSerialTerminal.Size = new System.Drawing.Size(148, 26);
+            this.toolStripMenuItemSerialTerminal.Size = new System.Drawing.Size(216, 26);
             this.toolStripMenuItemSerialTerminal.Text = "串口助手";
             this.toolStripMenuItemSerialTerminal.Click += new System.EventHandler(this.toolStripMenuItemSerialTerminal_Click);
             // 
@@ -245,9 +247,16 @@
             this.tabPageMessage.Location = new System.Drawing.Point(4, 25);
             this.tabPageMessage.Margin = new System.Windows.Forms.Padding(4);
             this.tabPageMessage.Name = "tabPageMessage";
-            this.tabPageMessage.Size = new System.Drawing.Size(824, 453);
+            this.tabPageMessage.Size = new System.Drawing.Size(911, 508);
             this.tabPageMessage.TabIndex = 4;
             this.tabPageMessage.Text = "消息";
+            // 
+            // toolStripMenuItemRegsConfig
+            // 
+            this.toolStripMenuItemRegsConfig.Name = "toolStripMenuItemRegsConfig";
+            this.toolStripMenuItemRegsConfig.Size = new System.Drawing.Size(216, 26);
+            this.toolStripMenuItemRegsConfig.Text = "寄存器配置";
+            this.toolStripMenuItemRegsConfig.Click += new System.EventHandler(this.toolStripMenuItemRegsConfig_Click);
             // 
             // Main
             // 
@@ -298,6 +307,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemConfig;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSerial;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenSerialConnectionDialog;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRegsConfig;
     }
 }
 

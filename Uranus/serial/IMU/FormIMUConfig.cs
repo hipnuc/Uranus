@@ -151,58 +151,57 @@ namespace Uranus.DialogsAndWindows
         private void buttonProtocol_Click(object sender, EventArgs e)
         {
             byte[] protocol_type = new byte[8];
-            int type_len = 0;
-            string protocol_description = "协议说明:\r\n5A +A5+<长度(2字节)>+<CRC(2字节)>";
-
-            if (checkBox0x91.Checked == true)
-            {
-                protocol_type[type_len++] = 0x91;
-                protocol_description += "+91+<IMUSOL(72字节)>";
-            }
+            int cnt = 0;
 
             if (checkBoxID.Checked == true)
             {
-                protocol_type[type_len++] = 0x90;
-                protocol_description += "+90+<ID(1字节)>";
+                checkBox0x91.Checked = false;
+                protocol_type[cnt++] = 0x90;
             }
 
             if (checkBoxAcc.Checked == true)
             {
-                protocol_type[type_len++] = 0xA0;
-                protocol_description += "+A0+<加速度(6字节)>";
+                checkBox0x91.Checked = false;
+                protocol_type[cnt++] = 0xA0;
             }
 
             if (checkBoxGyo.Checked == true)
             {
-                protocol_type[type_len++] = 0xB0;
-                protocol_description += "+B0+<角速度(6字节)>";
+                checkBox0x91.Checked = false;
+                protocol_type[cnt++] = 0xB0;
             }
 
             if (checkBoxMag.Checked == true)
             {
-                protocol_type[type_len++] = 0xC0;
-                protocol_description += "+C0+<地磁(6字节)>";
+                checkBox0x91.Checked = false;
+                protocol_type[cnt++] = 0xC0;
             }
 
             if (checkBoxAtdE.Checked == true)
             {
-                protocol_type[type_len++] = 0xD0;
-                protocol_description += "+D0+<欧拉角(6字节)>";
+                checkBox0x91.Checked = false;
+                protocol_type[cnt++] = 0xD0;
             }
             if (checkBoxAtdQ.Checked == true)
             {
-                protocol_type[type_len++] = 0xD1;
-                protocol_description += "+D1+<四元数(16字节)>";
+                checkBox0x91.Checked = false;
+                protocol_type[cnt++] = 0xD1;
             }
 
             if (checkBoxPressure.Checked == true)
             {
-                protocol_type[type_len++] = 0xF0;
-                protocol_description += "+F0+<气压(4字节)>";
+                checkBox0x91.Checked = false;
+                protocol_type[cnt++] = 0xF0;
+            }
+
+            if (checkBox0x91.Checked == true)
+            {
+                checkBox0x91.Checked = false;
+                protocol_type[cnt++] = 0x91;
             }
 
             string cmd = "AT+SETPTL=";
-            for (int i = 0; i < type_len; i++)
+            for (int i = 0; i < cnt; i++)
             {
                 cmd += protocol_type[i].ToString("X") + ",";
             }
@@ -211,7 +210,6 @@ namespace Uranus.DialogsAndWindows
                 cmd = cmd.Substring(0, cmd.Length - 1);
             }
             SendATCmd(cmd);
-            labelProtocol.Text = protocol_description;
         }
 
         private void checkBox0x91_CheckedChanged(object sender, EventArgs e)

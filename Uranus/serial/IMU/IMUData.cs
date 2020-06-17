@@ -50,11 +50,12 @@ namespace Uranus.Data
         public enum ItemID
         {
             kItemTest8F = 0x60,
-            kItemRFData = 0x62, /* new packet */
+            kItemGWSOL = 0x62, /* new packet */
             kItemID = 0x90,
             kItemIMUSOL = 0x91, /* new packet */
             kItemAccRaw = 0xA0,
             kItemGyrRaw = 0xB0,
+            kItemGyrCal = 0xB1,
             kItemMagRaw = 0xC0,
             kItemRotationEular = 0xD0,
             kItemRotationQuat = 0xD1,
@@ -129,6 +130,7 @@ namespace Uranus.Data
                         break;
 
                     case (byte)ItemID.kItemGyrRaw:
+                    case (byte)ItemID.kItemGyrCal:
                         imuData.SingleNode.Gyr = new float[3];
                         imuData.SingleNode.Gyr[0] = (float)BitConverter.ToInt16(buf, offset + 1);
                         imuData.SingleNode.Gyr[1] = (float)BitConverter.ToInt16(buf, offset + 3);
@@ -193,7 +195,7 @@ namespace Uranus.Data
                             imuData.ToStringData += "[" + i.ToString("d2") + "]:" + imuData.RFQuat[i, 0].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i, 1].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i, 2].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFQuat[i, 3].ToString("f3").PadLeft(5, ' ') + "\r\n";
 
                             _CSVHeader += string.Format("W{0}, X{0}, Y{0}, Z{0},", i);
-                            _CSVData += imuData.RFQuat[i, 0].ToString("f2") + "," + imuData.RFQuat[i, 1].ToString("f2") + "," + imuData.RFQuat[i, 2].ToString("f2") + "," + imuData.RFQuat[i, 3].ToString("f2") + ",";
+                            _CSVData += imuData.RFQuat[i, 0].ToString("f3") + "," + imuData.RFQuat[i, 1].ToString("f3") + "," + imuData.RFQuat[i, 2].ToString("f3") + "," + imuData.RFQuat[i, 3].ToString("f3") + ",";
                         }
 
                         offset += 1 + 16 * imuData.GW.node_num;
@@ -255,10 +257,10 @@ namespace Uranus.Data
                             imuData.RFEul[i, 1] = (float)(Int16)(buf[6 * i + offset + 3] + (buf[6 * i + offset + 4] << 8)) / 100;
                             imuData.RFEul[i, 2] = (float)(Int16)(buf[6 * i + offset + 5] + (buf[6 * i + offset + 6] << 8)) / 10;
 
-                            imuData.ToStringData += "[" + i.ToString("d2") + "]:" + imuData.RFEul[i, 0].ToString("f2").PadLeft(5, ' ') + " " + imuData.RFEul[i, 1].ToString("f2").PadLeft(5, ' ') + " " + imuData.RFEul[i, 2].ToString("f2").PadLeft(5, ' ') + "\r\n";
+                            imuData.ToStringData += "[" + i.ToString("d2") + "]:" + imuData.RFEul[i, 0].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFEul[i, 1].ToString("f3").PadLeft(5, ' ') + " " + imuData.RFEul[i, 2].ToString("f3").PadLeft(5, ' ') + "\r\n";
 
                             _CSVHeader += string.Format("P{0}, R{0}, Y{0},", i);
-                            _CSVData += imuData.RFEul[i, 0].ToString("f2") + "," + imuData.RFEul[i, 1].ToString("f2") + "," + imuData.RFEul[i, 2].ToString("f2") + ",";
+                            _CSVData += imuData.RFEul[i, 0].ToString("f3") + "," + imuData.RFEul[i, 1].ToString("f3") + "," + imuData.RFEul[i, 2].ToString("f3") + ",";
                         }
 
                         offset += 1 + 6 * imuData.GW.node_num;
@@ -306,7 +308,7 @@ namespace Uranus.Data
                         imuData.CSVData.Add(_CSVData);
                         offset += 76;
                         break;
-                    case (byte)ItemID.kItemRFData: /* new data */
+                    case (byte)ItemID.kItemGWSOL: /* new data */
                         imuData.GW.gwid = buf[1];
                         imuData.GW.node_num = buf[2];
 
@@ -350,8 +352,8 @@ namespace Uranus.Data
                             imuData.ToStringData += string.Format("{0,0}{1,5:f2} {2,5:f2} {3,5:f2}\r\n", "Eul:", n.Eul[0], n.Eul[1], n.Eul[2]);
                             imuData.ToStringData += string.Format("{0,14}{1,5:f3} {2,5:f3} {3,5:f3} {4,5:f3}\r\n", "Quat:", n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3]);
 
-                            _CSVHeader += string.Format("Roll{0}, Pitch{0}, Yaw{0}, W{0}, X{0}, Y{0}, Z{0},", n.ID);
-                            _CSVData += string.Format("{0:f2}, {1:f2}, {2:f2}, {3:f3}, {4:f3}, {5:f3}, {6:f3},", n.Eul[0], n.Eul[1], n.Eul[2], n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3]);
+                            _CSVHeader += string.Format(",Roll{0}, Pitch{0}, Yaw{0}, W{0}, X{0}, Y{0}, Z{0}, AccX{0}, AccY{0}, AccZ{0}, GyrX{0}, GyrY{0}, GyrZ{0}, MagX{0}, MagY{0}, MagZ{0}", n.ID);
+                            _CSVData += string.Format("{0:f2}, {1:f2}, {2:f2}, {3:f3}, {4:f3}, {5:f3}, {6:f3}, {7:f3}, {8:f3}, {9:f3}, {10:f3}, {11:f3}, {12:f3}, {13:f3}, {14:f3}, {15:f3},", n.Eul[0], n.Eul[1], n.Eul[2], n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3], n.Acc[0], n.Acc[1], n.Acc[2], n.Gyr[0], n.Gyr[1], n.Gyr[2], n.Mag[0], n.Mag[1], n.Mag[2]);
 
                             imuData.RFNodeList.Add(n);
                         }

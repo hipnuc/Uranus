@@ -7,7 +7,6 @@ using System.IO;
 using System.Threading;
 
 using Uranus.Utilities;
-using Uranus.DialogsAndWindows;
 
 namespace Uranus.DialogsAndWindows
 {
@@ -158,6 +157,7 @@ namespace Uranus.DialogsAndWindows
             byte[] Resp = WaitData(20, 2500);
             if (Resp.Length == 20)
             {
+
                 Resp = Resp.Skip(2).ToArray();
                 Resp = Resp.Skip(6).ToArray();
                 ret = true;

@@ -277,11 +277,6 @@ namespace Uranus
         #region  HelpMenu
         private void toolStripMenuItemGuide_Click(object sender, EventArgs e)
         {
-            //try
-            //{
-            //    System.Diagnostics.Process.Start("iexplore.exe", "https://upcmcu.taobao.com");
-            //}
-            //catch { }
             System.Diagnostics.Process.Start("https://upcmcu.taobao.com");
         }
 
@@ -291,9 +286,6 @@ namespace Uranus
             //System.Diagnostics.Process.Start("http://www.beyondcore.net/forum.php?mod=attachment&aid=MTA2NXw1MGYwYTFhZXwxNDcxNDQzMjM5fDF8Mjc4Ng%3D%3D");
         }
 
-        /// <summary>
-        /// toolStripMenuItemAbout Click event to display version details.
-        /// </summary>
         private void toolStripMenuItemAbout0_Click(object sender, EventArgs e)
         {
             FormAbout About = new FormAbout();
@@ -318,6 +310,17 @@ namespace Uranus
             }
             fmTerminal.Show();
         }
+
+        private void toolStripMenuItemRegsConfig_Click(object sender, EventArgs e)
+        {
+            FormRegsConfig fmRegsConfig = new FormRegsConfig(m_connection);
+            if (fmRegsConfig.IsDisposed == true)
+            {
+                fmRegsConfig = new FormRegsConfig(m_connection);
+            }
+            fmRegsConfig.Show();
+        }
+
         #endregion
 
         #region DataLoggerMenu
@@ -382,6 +385,7 @@ namespace Uranus
         {
             fmIMU.OpenConfigurationDialog();
         }
+
 
     }
 }

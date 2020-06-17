@@ -90,6 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection.cs" />
+    <Compile Include="DialogsAndWindows\FormRegsConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DialogsAndWindows\FormRegsConfig.Designer.cs">
+      <DependentUpon>FormRegsConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="DialogsAndWindows\TerminalForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DialogsAndWindows\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DialogsAndWindows\FormRegsConfig.resx">
+      <DependentUpon>FormRegsConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DialogsAndWindows\TerminalForm.resx">
       <DependentUpon>TerminalForm.cs</DependentUpon>
