@@ -58,7 +58,6 @@ namespace Uranus.Data
             kItemGyrCal = 0xB1,
             kItemMagRaw = 0xC0,
             kItemRotationEular = 0xD0,
-            kItemRotationEular2 = 0xD9,
             kItemRotationQuat = 0xD1,
             kItemPressure = 0xF0,
             kItemRFQuat = 0x71,   /* 4*16 float quat */
@@ -159,19 +158,9 @@ namespace Uranus.Data
                         imuData.SingleNode.Eul[0] = (float)BitConverter.ToInt16(buf, offset + 3) / 100;
                         imuData.SingleNode.Eul[2] = (float)BitConverter.ToInt16(buf, offset + 5) / 10;
                         offset += 7;
-                        imuData.CSVHeaders.Add("Pitch, Roll, Yaw");
+                        imuData.CSVHeaders.Add("Roll, Pitch, Yaw");
                         imuData.CSVData.Add(imuData.SingleNode.Eul[0].ToString() + ',' + imuData.SingleNode.Eul[1].ToString() + ',' + imuData.SingleNode.Eul[2].ToString());
                         imuData.ToStringData += string.Format("{0,-10}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "欧拉角PRY:", imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[2]);
-                        break;
-                    case (byte)ItemID.kItemRotationEular2:
-                        imuData.SingleNode.Eul = new float[3];
-                        imuData.SingleNode.Eul[1] = BitConverter.ToSingle(buf, offset + 1 + 0 * 4);
-                        imuData.SingleNode.Eul[0] = BitConverter.ToSingle(buf, offset + 1 + 1 * 4);
-                        imuData.SingleNode.Eul[2] = BitConverter.ToSingle(buf, offset + 1 + 2 * 4);
-                        offset += 13;
-                        imuData.CSVHeaders.Add("Pitch, Roll, Yaw");
-                        imuData.CSVData.Add(imuData.SingleNode.Eul[0].ToString() + ',' + imuData.SingleNode.Eul[1].ToString() + ',' + imuData.SingleNode.Eul[2].ToString());
-                        imuData.ToStringData += string.Format("{0,-10}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "欧拉角(Float)PRY:", imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[2]);
                         break;
                     case (byte)ItemID.kItemRotationQuat:
                         imuData.SingleNode.Quat = new float[4];
