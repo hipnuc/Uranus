@@ -49,6 +49,16 @@ namespace Uranus.DialogsAndWindows
         {
             fmConfig.PutRawData(buffer);
             KbootDecoder.Input(buffer);
+
+            IMUData data;
+            data = SxDecode.Decode(buffer);
+            if (data != null)
+            {
+                SampleCounter.Increment(1);
+                imuData = data;
+                DoOnDataReceived(imuData);
+            }
+
         }
 
         private void FormIMU_Load(object sender, EventArgs e)
