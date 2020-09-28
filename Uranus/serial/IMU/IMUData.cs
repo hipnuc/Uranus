@@ -21,6 +21,7 @@ namespace Uranus.Data
             public float[] Acc;
             public float[] Gyr;
             public float[] Mag;
+            public float Temperature;
             public float Prs;
         }
 
@@ -59,6 +60,7 @@ namespace Uranus.Data
             kItemMagRaw = 0xC0,
             kItemRotationEular = 0xD0,
             kItemRotationQuat = 0xD1,
+            kItemTemperature = 0xE0,
             kItemPressure = 0xF0,
             kItemRFQuat = 0x71,   /* 4*16 float quat */
             kItemRFEul = 0x72,
@@ -120,37 +122,38 @@ namespace Uranus.Data
                     case (byte)ItemID.kItemAccRaw:
                         imuData.SingleNode.Acc = new float[3];
 
-                        imuData.SingleNode.Acc[0] = (float)BitConverter.ToInt16(buf, offset + 1);
-                        imuData.SingleNode.Acc[1] = (float)BitConverter.ToInt16(buf, offset + 3);
-                        imuData.SingleNode.Acc[2] = (float)BitConverter.ToInt16(buf, offset + 5);
+                        imuData.SingleNode.Acc[0] = (float)BitConverter.ToInt16(buf, offset + 1) / 1000;
+                        imuData.SingleNode.Acc[1] = (float)BitConverter.ToInt16(buf, offset + 3) / 1000;
+                        imuData.SingleNode.Acc[2] = (float)BitConverter.ToInt16(buf, offset + 5) / 1000;
                         offset += 7;
-                        imuData.CSVHeaders.Add("AccX, AccY, AccZ");
+                        imuData.CSVHeaders.Add("AccX(G), AccY, AccZ");
                         imuData.CSVData.Add(imuData.SingleNode.Acc[0].ToString() + ',' + imuData.SingleNode.Acc[1].ToString() + ',' + imuData.SingleNode.Acc[2].ToString());
-                        imuData.ToStringData += string.Format("{0,-10}{1,7}{2,7}{3,7}\r\n", "加速度:", imuData.SingleNode.Acc[0], imuData.SingleNode.Acc[1], imuData.SingleNode.Acc[2]);
+                        imuData.ToStringData += string.Format("{0,-14}{1,7:f3}{2,7:f3}{3,7:f3}\r\n", "加速度(G):", imuData.SingleNode.Acc[0], imuData.SingleNode.Acc[1], imuData.SingleNode.Acc[2]);
                         break;
 
                     case (byte)ItemID.kItemGyrRaw:
                     case (byte)ItemID.kItemGyrCal:
                         imuData.SingleNode.Gyr = new float[3];
-                        imuData.SingleNode.Gyr[0] = (float)BitConverter.ToInt16(buf, offset + 1);
-                        imuData.SingleNode.Gyr[1] = (float)BitConverter.ToInt16(buf, offset + 3);
-                        imuData.SingleNode.Gyr[2] = (float)BitConverter.ToInt16(buf, offset + 5);
+                        imuData.SingleNode.Gyr[0] = (float)BitConverter.ToInt16(buf, offset + 1) / 10;
+                        imuData.SingleNode.Gyr[1] = (float)BitConverter.ToInt16(buf, offset + 3) / 10;
+                        imuData.SingleNode.Gyr[2] = (float)BitConverter.ToInt16(buf, offset + 5) / 10;
+
                         offset += 7;
-                        imuData.CSVHeaders.Add("GyrX, GyrY, GyrZ");
+                        imuData.CSVHeaders.Add("GyrX(dps), GyrY, GyrZ");
                         imuData.CSVData.Add(imuData.SingleNode.Gyr[0].ToString() + ',' + imuData.SingleNode.Gyr[1].ToString() + ',' + imuData.SingleNode.Gyr[2].ToString());
-                        imuData.ToStringData += string.Format("{0,-10}{1,7}{2,7}{3,7}\r\n", "角速度:", imuData.SingleNode.Gyr[0], imuData.SingleNode.Gyr[1], imuData.SingleNode.Gyr[2]);
+                        imuData.ToStringData += string.Format("{0,-14}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "角速度(dps):", imuData.SingleNode.Gyr[0], imuData.SingleNode.Gyr[1], imuData.SingleNode.Gyr[2]);
                         break;
 
                     case (byte)ItemID.kItemMagRaw:
                         imuData.SingleNode.Mag = new float[3];
 
-                        imuData.SingleNode.Mag[0] = (float)BitConverter.ToInt16(buf, offset + 1);
-                        imuData.SingleNode.Mag[1] = (float)BitConverter.ToInt16(buf, offset + 3);
-                        imuData.SingleNode.Mag[2] = (float)BitConverter.ToInt16(buf, offset + 5);
+                        imuData.SingleNode.Mag[0] = (float)BitConverter.ToInt16(buf, offset + 1) / 10;
+                        imuData.SingleNode.Mag[1] = (float)BitConverter.ToInt16(buf, offset + 3) / 10;
+                        imuData.SingleNode.Mag[2] = (float)BitConverter.ToInt16(buf, offset + 5) / 10;
                         offset += 7;
-                        imuData.CSVHeaders.Add("MagX, MagY, MagZ");
+                        imuData.CSVHeaders.Add("MagX(uT), MagY, MagZ");
                         imuData.CSVData.Add(imuData.SingleNode.Mag[0].ToString() + ',' + imuData.SingleNode.Mag[1].ToString() + ',' + imuData.SingleNode.Mag[2].ToString());
-                        imuData.ToStringData += string.Format("{0,-11}{1,7}{2,7}{3,7}\r\n", "磁场:", imuData.SingleNode.Mag[0], imuData.SingleNode.Mag[1], imuData.SingleNode.Mag[2]);
+                        imuData.ToStringData += string.Format("{0,-15}{1,7:f1}{2,7:f1}{3,7:f1}\r\n", "磁场(uT):", imuData.SingleNode.Mag[0], imuData.SingleNode.Mag[1], imuData.SingleNode.Mag[2]);
                         break;
                     case (byte)ItemID.kItemRotationEular:
                         imuData.SingleNode.Eul = new float[3];
@@ -158,9 +161,9 @@ namespace Uranus.Data
                         imuData.SingleNode.Eul[0] = (float)BitConverter.ToInt16(buf, offset + 3) / 100;
                         imuData.SingleNode.Eul[2] = (float)BitConverter.ToInt16(buf, offset + 5) / 10;
                         offset += 7;
-                        imuData.CSVHeaders.Add("Roll, Pitch, Yaw");
+                        imuData.CSVHeaders.Add("Roll(deg), Pitch, Yaw");
                         imuData.CSVData.Add(imuData.SingleNode.Eul[0].ToString() + ',' + imuData.SingleNode.Eul[1].ToString() + ',' + imuData.SingleNode.Eul[2].ToString());
-                        imuData.ToStringData += string.Format("{0,-10}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "欧拉角PRY:", imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[2]);
+                        imuData.ToStringData += string.Format("{0,-14}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "欧拉角PRY(deg):", imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[2]);
                         break;
                     case (byte)ItemID.kItemRotationQuat:
                         imuData.SingleNode.Quat = new float[4];
@@ -179,7 +182,14 @@ namespace Uranus.Data
                         offset += 5;
                         imuData.CSVHeaders.Add("Pressure");
                         imuData.CSVData.Add(imuData.SingleNode.Prs.ToString());
-                        imuData.ToStringData += string.Format("{0,-10}{1,6:f3}\r\n", "大气压:", imuData.SingleNode.Prs);
+                        imuData.ToStringData += string.Format("{0,-14}{1,6:f3}\r\n", "大气压:", imuData.SingleNode.Prs);
+                        break;
+                    case (byte)ItemID.kItemTemperature:
+                        imuData.SingleNode.Temperature = BitConverter.ToSingle(buf, offset + 1);
+                        offset += 5;
+                        imuData.CSVHeaders.Add("Temperature");
+                        imuData.CSVData.Add(imuData.SingleNode.Temperature.ToString());
+                        imuData.ToStringData += string.Format("{0,-14}{1,6:f3}\r\n", "温度:", imuData.SingleNode.Temperature);
                         break;
                     case (byte)ItemID.kItemRFQuat:
                         imuData.RFQuat = new float[imuData.GW.node_num, 4];
@@ -316,7 +326,7 @@ namespace Uranus.Data
 
                         for (int i = 0; i < imuData.GW.node_num; i++)
                         {
-                            Node n;
+                            Node n = new Node();
                             n.Quat = new float[4];
                             n.Gyr = new float[3];
                             n.Mag = new float[3];
