@@ -66,8 +66,6 @@ namespace Uranus.Data
             kItemRFEul = 0x72,
             kItemRFAcc = 0x75,
             kItemRFGyr = 0x78,
-            kItemRFMag = 0x7A,
-            kItemExtend = 0x61,   /* extend data */
             kItemEnd = 0x00,
         };
 
@@ -163,7 +161,7 @@ namespace Uranus.Data
                         offset += 7;
                         imuData.CSVHeaders.Add("Roll(deg), Pitch, Yaw");
                         imuData.CSVData.Add(imuData.SingleNode.Eul[0].ToString() + ',' + imuData.SingleNode.Eul[1].ToString() + ',' + imuData.SingleNode.Eul[2].ToString());
-                        imuData.ToStringData += string.Format("{0,-14}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "欧拉角PRY(deg):", imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[2]);
+                        imuData.ToStringData += string.Format("{0,-14}{1,7:f2}{2,7:f2}{3,7:f2}\r\n", "欧拉角RPY(deg):", imuData.SingleNode.Eul[0], imuData.SingleNode.Eul[1], imuData.SingleNode.Eul[2]);
                         break;
                     case (byte)ItemID.kItemRotationQuat:
                         imuData.SingleNode.Quat = new float[4];
@@ -362,7 +360,7 @@ namespace Uranus.Data
                             imuData.ToStringData += string.Format("{0,0}{1,5:f2} {2,5:f2} {3,5:f2}\r\n", "Eul:", n.Eul[0], n.Eul[1], n.Eul[2]);
                             imuData.ToStringData += string.Format("{0,14}{1,5:f3} {2,5:f3} {3,5:f3} {4,5:f3}\r\n", "Quat:", n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3]);
 
-                            _CSVHeader += string.Format(",Roll{0}, Pitch{0}, Yaw{0}, W{0}, X{0}, Y{0}, Z{0}, AccX{0}, AccY{0}, AccZ{0}, GyrX{0}, GyrY{0}, GyrZ{0}, MagX{0}, MagY{0}, MagZ{0}", n.ID);
+                            _CSVHeader += string.Format("Roll{0}, Pitch{0}, Yaw{0}, W{0}, X{0}, Y{0}, Z{0}, AccX{0}, AccY{0}, AccZ{0}, GyrX{0}, GyrY{0}, GyrZ{0}, MagX{0}, MagY{0}, MagZ{0}", n.ID);
                             _CSVData += string.Format("{0:f2}, {1:f2}, {2:f2}, {3:f3}, {4:f3}, {5:f3}, {6:f3}, {7:f3}, {8:f3}, {9:f3}, {10:f3}, {11:f3}, {12:f3}, {13:f3}, {14:f3}, {15:f3},", n.Eul[0], n.Eul[1], n.Eul[2], n.Quat[0], n.Quat[1], n.Quat[2], n.Quat[3], n.Acc[0], n.Acc[1], n.Acc[2], n.Gyr[0], n.Gyr[1], n.Gyr[2], n.Mag[0], n.Mag[1], n.Mag[2]);
 
                             imuData.RFNodeList.Add(n);

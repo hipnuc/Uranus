@@ -72,7 +72,7 @@ namespace Uranus.DialogsAndWindows
         {
             if (data.SingleNode.Eul != null)
             {
-                this.SetPitchRollYaw(data.SingleNode.Eul[0], data.SingleNode.Eul[1], data.SingleNode.Eul[2]);
+                this.SetPitchRollYaw(data.SingleNode.Eul[1], data.SingleNode.Eul[0], data.SingleNode.Eul[2]);
             }
 
             if (data.SingleNode.Quat != null)

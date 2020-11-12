@@ -97,7 +97,6 @@ namespace Uranus
         private void RefreshSerialPortList(ToolStripMenuItem item)
         {
             Int32 last_baud = Convert.ToInt32(iniFile.Read("SerialPort", "Baudrate"));
-            String last_port_name = iniFile.Read("SerialPort", "Name");
 
             ToolStripItemCollection DropDownCollection = item.DropDownItems;
             DropDownCollection.Clear();
@@ -107,7 +106,6 @@ namespace Uranus
             {
                 DropDownCollection.Add("COM" + Regex.Replace(portName.Substring("COM".Length, portName.Length - "COM".Length), "[^.0-9]", "\0") + ", " + 115200.ToString());
             }
-            DropDownCollection.Add(last_port_name + "," + last_baud.ToString());
             DropDownCollection.Add(toolStripMenuItemOpenSerialConnectionDialog);
         }
 
