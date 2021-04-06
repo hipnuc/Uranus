@@ -275,14 +275,9 @@ namespace Uranus
         #region  HelpMenu
         private void toolStripMenuItemGuide_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://upcmcu.taobao.com");
+            System.Diagnostics.Process.Start("www.hipnuc.com");
         }
 
-        private void toolStripMenuItemUpgrade_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://hipnuc.com/forum.php?mod=forumdisplay&fid=92");
-            //System.Diagnostics.Process.Start("http://www.beyondcore.net/forum.php?mod=attachment&aid=MTA2NXw1MGYwYTFhZXwxNDcxNDQzMjM5fDF8Mjc4Ng%3D%3D");
-        }
 
         private void toolStripMenuItemAbout0_Click(object sender, EventArgs e)
         {
@@ -384,6 +379,9 @@ namespace Uranus
             fmIMU.OpenConfigurationDialog();
         }
 
-
+        private void 购买ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://upcmcu.taobao.com");
+        }
     }
 }
