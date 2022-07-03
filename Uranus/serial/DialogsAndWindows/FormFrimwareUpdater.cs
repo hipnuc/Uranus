@@ -207,7 +207,7 @@ namespace Uranus.DialogsAndWindows
             Data.AddRange(BitConverter.GetBytes(addr));
             Data.AddRange(BitConverter.GetBytes(len));
             InjectCommand(WarpFramePacket(FramePacketType.kFramingPacketType_Command, Data.ToArray()));
-            byte[] Resp = WaitData(20, (len > 8000)?(8000):(len)); // the more len , the more time 
+            byte[] Resp = WaitData(20, (len > 32000)?(32000):(len)); // the more len , the more time 
             if (Resp.Length == 20)
             {
                     ret = true;

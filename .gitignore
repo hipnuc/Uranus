@@ -20,7 +20,10 @@ build/
 
 *_i.c
 *_p.c
+*.ini
 *.ilk
+*.zip
+*.exe
 *.meta
 *.obj
 *.pch
