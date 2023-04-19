@@ -1,0 +1,6 @@
+[SerialPort]
+Baudrate=115200
+Name=COM76
+[Bootloader]
+AppStartAddr=0x08008000
+AppPath=C:\Users\14533\Desktop\gitResp\HiPNUC\Project\Internal\ch100\mdk\atf413_ch100_a0_32k\atf413_ch100_b0_32k.hex

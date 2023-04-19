@@ -56,6 +56,7 @@ namespace Uranus.Data
             kItemIMUSOL = 0x91, /* new packet */
             kItemAccRaw = 0xA0,
             kItemGyrRaw = 0xB0,
+            kItemGyrCal = 0xB1,
             kItemMagRaw = 0xC0,
             kItemRotationEular = 0xD0,
             kItemRotationQuat = 0xD1,
@@ -128,6 +129,7 @@ namespace Uranus.Data
                         break;
 
                     case (byte)ItemID.kItemGyrRaw:
+                    case (byte)ItemID.kItemGyrCal:
                         imuData.SingleNode.Gyr = new float[3];
                         imuData.SingleNode.Gyr[0] = (float)BitConverter.ToInt16(buf, offset + 1) / 10;
                         imuData.SingleNode.Gyr[1] = (float)BitConverter.ToInt16(buf, offset + 3) / 10;
@@ -166,15 +168,13 @@ namespace Uranus.Data
                         imuData.SingleNode.Quat[2] = BitConverter.ToSingle(buf, offset + 1 + 2 * 4);
                         imuData.SingleNode.Quat[3] = BitConverter.ToSingle(buf, offset + 1 + 3 * 4);
 
-                        //UInt64 tmp = BitConverter.ToUInt64(buf, offset + 1 + 0 * 8);
+                     //   UInt64 tmp = BitConverter.ToUInt64(buf, offset + 1 + 0 * 8);
 
-                        //imuData.SingleNode.Quat[0] = tmp & 0x7FFFFFFFFFFFFFFF;
-                        //tmp = BitConverter.ToUInt64(buf, offset + 1 + 1 * 8);
-                        //imuData.SingleNode.Quat[1] = tmp & 0x7FFFFFFFFFFFFFFF;
-                        //if ((tmp & 0x8000000000000000) != 0)
-                        //{
-                        //    UInt32 temmp = 3;
-                        //}
+                     //   imuData.SingleNode.Quat[0] = tmp & 0x7FFFFFFFFFFFFFFF;
+                     //   tmp = BitConverter.ToUInt64(buf, offset + 1 + 1 * 8);
+                    //    imuData.SingleNode.Quat[1] = tmp & 0x7FFFFFFFFFFFFFFF;
+
+
                         offset += 17;
                         imuData.CSVHeaders.Add("Q(W), Q(X), Q(Y), Q(Z)");
                         imuData.CSVData.Add(imuData.SingleNode.Quat[0].ToString() + ',' + imuData.SingleNode.Quat[1].ToString() + ',' + imuData.SingleNode.Quat[2].ToString() + ',' + imuData.SingleNode.Quat[3].ToString());
@@ -282,7 +282,7 @@ namespace Uranus.Data
                         imuData.SingleNode.Eul = new float[3];
 
                         imuData.SingleNode.ID = buf[offset + 1];
-                        imuData.SingleNode.Temperature = buf[offset + 3];
+                        imuData.SingleNode.Temperature = (sbyte)buf[offset + 3];
                         imuData.SingleNode.TS = BitConverter.ToUInt32(buf, offset + 8);
                         imuData.SingleNode.Prs = BitConverter.ToSingle(buf, offset + 4);
                         imuData.SingleNode.Acc[0] = (float)BitConverter.ToSingle(buf, offset + 12 + 0 * 4);
@@ -297,6 +297,7 @@ namespace Uranus.Data
                         imuData.SingleNode.Eul[0] = (float)BitConverter.ToSingle(buf, offset + 48 + 0 * 4);
                         imuData.SingleNode.Eul[1] = (float)BitConverter.ToSingle(buf, offset + 48 + 1 * 4);
                         imuData.SingleNode.Eul[2] = (float)BitConverter.ToSingle(buf, offset + 48 + 2 * 4);
+
                         imuData.SingleNode.Quat[0] = (float)BitConverter.ToSingle(buf, offset + 60 + 0 * 4);
                         imuData.SingleNode.Quat[1] = (float)BitConverter.ToSingle(buf, offset + 60 + 1 * 4);
                         imuData.SingleNode.Quat[2] = (float)BitConverter.ToSingle(buf, offset + 60 + 2 * 4);
