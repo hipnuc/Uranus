@@ -335,6 +335,7 @@ namespace Uranus.DialogsAndWindows
                 if (ImagReader.IsStartAddrGet == true)
                 {
                     textBoxStartAddr.Text = "0x" + ImagReader.StartAddr.ToString("X8");
+                    Console.WriteLine("镜像起始地址: 0x" + textBoxStartAddr.Text);
                 }
             }
         }
@@ -357,6 +358,10 @@ namespace Uranus.DialogsAndWindows
             buttonUpdate.Enabled = false;
 
             byte[] FileData = ImagReader.GetDataFromFile(textBox1.Text);
+            if (ImagReader.IsStartAddrGet == true)
+            {
+                textBoxStartAddr.Text = "0x" + ImagReader.StartAddr.ToString("X8");
+            }
 
             if (FileData == null || FileData.Length == 0 || (FileData.Length > 4*1024*1024))
             {
@@ -594,17 +599,6 @@ namespace Uranus.DialogsAndWindows
         private void FormBootloader_Load(object sender, EventArgs e)
         {
             textBox1.Text = iniFile.Read("Bootloader", "AppPath");
-            string StartAddr = iniFile.Read("Bootloader", "AppStartAddr");
-            if (StartAddr == null || StartAddr.Length == 0)
-            {
-                textBoxStartAddr.Text = "0x00008000";
-                iniFile.Write("Bootloader", "AppStartAddr", textBoxStartAddr.Text);
-            }
-            else
-            {
-                textBoxStartAddr.Text = StartAddr;
-            }
-            
             Console.SetOut(new ConsoleWriter(listBoxLog));
         }
 
