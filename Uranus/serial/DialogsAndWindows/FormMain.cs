@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Linq;
 using System.IO.Ports;
 using Uranus.DialogsAndWindows;
 using Uranus.Utilities;
@@ -102,7 +103,10 @@ namespace Uranus
             DropDownCollection.Clear();
 
             DropDownCollection.Add("刷新串口");
-            foreach (string portName in System.IO.Ports.SerialPort.GetPortNames())
+            string[] arr = System.IO.Ports.SerialPort.GetPortNames();
+            
+            arr = arr.Distinct().ToArray();
+            foreach (string portName in arr)
             {
                 DropDownCollection.Add("COM" + Regex.Replace(portName.Substring("COM".Length, portName.Length - "COM".Length), "[^.0-9]", "\0") + ", " + 115200.ToString());
             }
